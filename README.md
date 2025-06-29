@@ -1,6 +1,7 @@
-# 🎯 OrB z – Real-Time Copyright Risk Detection for Streamers
+# OrB Z – Real-Time Copyright Risk Detection for Streamers
 
-**OrB z** is an AI-powered SaaS platform that analyzes your live stream in real-time to detect and flag potentially copyrighted content — before platforms like YouTube or Twitch can issue a claim or strike. Designed with creators in mind, OrB z helps streamers stay compliant while focusing on what matters: content.
+# *OrB Z*
+ is an AI-powered SaaS platform that analyzes your live stream in real-time to detect and flag potentially copyrighted content — before platforms like YouTube or Twitch can issue a claim or strike. Designed with creators in mind, OrB z helps streamers stay compliant while focusing on what matters: content.
 
 ---
 
@@ -21,14 +22,15 @@
 
 ## 🛠️ Tech Stack
 
-| Layer             | Tech                        |
-|------------------|-----------------------------|
-| Frontend         | React + Tailwind            |
-| Backend API      | Node.js / FastAPI / Rust    |
-| Audio Analysis   | Librosa, FFmpeg, Whisper    |
-| Video Detection  | YOLOv8, OpenCV, CLIP        |
-| DB / Vector Store| PostgreSQL + pgvector / FAISS |
-| Ingest           | RTMP / WebRTC / SDK         |
+| Layer             | Tech                                |
+| ----------------- | ----------------------------------- |
+| Frontend          | React + Tailwind + Redux + TanStack |
+| Desktop Framework | Electron                            |
+| Backend API       | Node.js / Express.js                |
+| Audio Analysis    | Librosa, FFmpeg, Whisper            |
+| Video Detection   | YOLOv8, OpenCV, CLIP                |
+| DB / Vector Store | PostgreSQL + pgvector / FAISS       |
+| Ingest            | RTMP / WebRTC / SDK                 |
 
 ---
 
@@ -40,46 +42,50 @@
 
 ```bash
 git clone https://github.com/your-username/orbz.git
+```
+
+2. **Navigate to the repo**
+
+```bash
 cd orbz
-Install dependencies
+```
 
-bash
-Copy
-Edit
-# for backend
-cd server
-npm install
+3. **Insall al dependencies**
 
-# for frontend
-cd ../client
-npm install
-Run the app
+```bash
+npm install | npm i
+```
 
-bash
-Copy
-Edit
-# backend
-cd server
+4. **Run the dev environment**
+
+```bash
 npm run dev
+```
 
-# frontend
-cd ../client
-npm run dev
+> ⚠️ Production-ready deployment coming soon, Expected Demo in 3 months.
+
 🌐 API (Coming Soon)
 A RESTful API and WebSocket interface will be available for integration with overlays, bots, and external tools.
+> ⚠️ Production-ready API deployment coming soon
 
 📈 Roadmap
- Audio fingerprint engine
+- Audio fingerprint engine
 
- Real-time stream ingest
+- Real-time stream ingest
 
- Scene/logo detection MVP
+- Scene/logo detection MVP
 
- Speech detection integration
+- Speech detection integration
 
- Streamer-facing dashboard
+- Streamer-facing dashboard
 
- Webhook alerts
+- Webhook alerts
 
- SaaS billing + user auth
+> ***For website***
 
+  - SaaS billing + user auth 
+
+> ***For Desktop***
+
+- **TOKENS BILLING MANAGMENT** 
+- *SaaS billing + user auth*
