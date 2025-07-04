@@ -1,0 +1,1 @@
+// to export all the variables that may change as the endpoint or so, not private keys
