@@ -1,37 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Lobster&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Poiret+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Righteous&family=Space+Grotesk:wght@300..700&family=Unica+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Lobster&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Poiret+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Righteous&family=Space+Grotesk:wght@300..700&family=Unica+One&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-abril: 'Abril Fatface', serif;
-  --font-cormorant: 'Cormorant Garamond', serif;
-  --font-dancing: 'Dancing Script', cursive;
-  --font-greatvibes: 'Great Vibes', cursive;
-  --font-lobster: 'Lobster', cursive;
-  --font-nunito: 'Nunito', sans-serif;
-  --font-pacifico: 'Pacifico', cursive;
-  --font-poiret: 'Poiret One', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
-  --font-righteous: 'Righteous', cursive;
-  --font-spacegrotesk: 'Space Grotesk', sans-serif;
-  --font-unica: 'Unica One', cursive;
-}
+  --font-abril: "Abril Fatface", serif;
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-dancing: "Dancing Script", cursive;
+  --font-greatvibes: "Great Vibes", cursive;
+  --font-lobster: "Lobster", cursive;
+  --font-nunito: "Nunito", sans-serif;
+  --font-pacifico: "Pacifico", cursive;
+  --font-poiret: "Poiret One", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-righteous: "Righteous", cursive;
+  --font-spacegrotesk: "Space Grotesk", sans-serif;
+  --font-unica: "Unica One", cursive;
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-:root {
   --bg-dark: oklch(0.1 0 65);
   --bg: oklch(0.15 0 65);
   --bg-light: oklch(0.2 0 65);
@@ -47,19 +30,18 @@
   --success: oklch(0.7 0.05 160);
   --info: oklch(0.7 0.05 260);
 }
-body.light {
-  --bg-dark: oklch(0.92 0 65);
-  --bg: oklch(0.96 0 65);
-  --bg-light: oklch(1 0 65);
-  --text: oklch(0.15 0 65);
-  --text-muted: oklch(0.4 0 65);
-  --highlight: oklch(1 0 65);
-  --border: oklch(0.6 0 65);
-  --border-muted: oklch(0.7 0 65);
-  --primary: oklch(0.4 0.1 65);
-  --secondary: oklch(0.4 0.1 245);
-  --danger: oklch(0.5 0.05 30);
-  --warning: oklch(0.5 0.05 100);
-  --success: oklch(0.5 0.05 160);
-  --info: oklch(0.5 0.05 260);
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--bg);
+  color: var(--text);
 }
