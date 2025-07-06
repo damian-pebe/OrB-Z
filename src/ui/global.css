@@ -1,4 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Lobster&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Poiret+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Righteous&family=Space+Grotesk:wght@300..700&family=Unica+One&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-abril: 'Abril Fatface', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-dancing: 'Dancing Script', cursive;
+  --font-greatvibes: 'Great Vibes', cursive;
+  --font-lobster: 'Lobster', cursive;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-pacifico: 'Pacifico', cursive;
+  --font-poiret: 'Poiret One', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-righteous: 'Righteous', cursive;
+  --font-spacegrotesk: 'Space Grotesk', sans-serif;
+  --font-unica: 'Unica One', cursive;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -16,22 +32,6 @@
 }
 
 :root {
-  /* hsl (fallback color) */
-  --bg-dark: hsl(336 0% 1%);
-  --bg: hsl(300 0% 4%);
-  --bg-light: hsl(0 0% 9%);
-  --text: hsl(300 0% 95%);
-  --text-muted: hsl(300 0% 69%);
-  --highlight: hsl(330 0% 39%);
-  --border: hsl(0 0% 28%);
-  --border-muted: hsl(300 0% 18%);
-  --primary: hsl(30 63% 64%);
-  --secondary: hsl(207 76% 70%);
-  --danger: hsl(9 26% 64%);
-  --warning: hsl(52 19% 57%);
-  --success: hsl(146 17% 59%);
-  --info: hsl(217 28% 65%);
-  /* oklch */
   --bg-dark: oklch(0.1 0 65);
   --bg: oklch(0.15 0 65);
   --bg-light: oklch(0.2 0 65);
@@ -48,22 +48,6 @@
   --info: oklch(0.7 0.05 260);
 }
 body.light {
-  /* hsl (fallback color) */
-  --bg-dark: hsl(0 0% 90%);
-  --bg: hsl(300 0% 95%);
-  --bg-light: hsl(300 50% 100%);
-  --text: hsl(300 0% 4%);
-  --text-muted: hsl(0 0% 28%);
-  --highlight: hsl(300 50% 100%);
-  --border: hsl(NaN 0% 50%);
-  --border-muted: hsl(340 0% 62%);
-  --primary: hsl(36 100% 18%);
-  --secondary: hsl(203 98% 24%);
-  --danger: hsl(9 21% 41%);
-  --warning: hsl(52 23% 34%);
-  --success: hsl(147 19% 36%);
-  --info: hsl(217 22% 41%);
-  /* oklch */
   --bg-dark: oklch(0.92 0 65);
   --bg: oklch(0.96 0 65);
   --bg-light: oklch(1 0 65);
