@@ -1,10 +1,12 @@
+import { getPreloadPath } from "./pathResolver.js";
+
 const baseOptions: Electron.BrowserWindowConstructorOptions = {
   width: 800,
   height: 700,
   frame: false,
   titleBarStyle: "hidden",
   webPreferences: {
-    nodeIntegration: true,
+    preload: getPreloadPath()
   },
 };
 
