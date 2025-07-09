@@ -6,7 +6,7 @@ const baseOptions: Electron.BrowserWindowConstructorOptions = {
   frame: false,
   titleBarStyle: "hidden",
   webPreferences: {
-    preload: getPreloadPath()
+    preload: getPreloadPath(),
   },
 };
 

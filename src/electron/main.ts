@@ -4,8 +4,6 @@ import { isDev } from "./util.js";
 import options from "./mainWindowConfig.js";
 
 app.on("ready", () => {
-  
-
   const mainWindow = new BrowserWindow(options);
   mainWindow.setMenuBarVisibility(false);
   mainWindow.setAutoHideMenuBar(false);
@@ -24,4 +22,3 @@ app.on("ready", () => {
 // Add buttons for close, minimize, maximize/restore.
 
 // Hook them to Electron window APIs using ipcRenderer or @electron/remote.
-
