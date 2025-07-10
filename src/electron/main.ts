@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import options from "./mainWindowConfig.js";
+import options from "./settings/mainWindowConfig.js";
+import { pollResources } from "./previewsManager.js";
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow(options);
@@ -13,6 +14,8 @@ app.on("ready", () => {
   } else {
     mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
   }
+
+  pollResources(mainWindow)
 });
 
 //TODO because i remove the menu

@@ -1,16 +1,19 @@
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeScreenRecording: (callback: (statistics: any) => void) =>
-    callback({}),
-  getScreenRecording: () => console.log("static"),
+  subscribeViewer: (callback: (statistics: any) => void) => {
+    electron.ipcRenderer.on("statistics", (_: any, stats: any) => {
+      callback(stats);
+    });
+  },
+  getScreenView: () => console.log("static"),
 });
 
 //? Call it from Google Dev Tools
 //* Open DevTools Ctrl+Shift+i
 
-// electron.getScreenRecording();
+// electron.getScreenView();
 
-//electron.subscribeScreenRecording((data) => {
+//electron.subscribeViewer((data) => {
 //     console.log("Received:", data);
 // });
