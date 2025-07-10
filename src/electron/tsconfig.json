@@ -5,5 +5,7 @@
         "module": "nodenext",
         "outDir": "../../dist-electron",
         "skipLibCheck": true,
-    }
+    },
+    "include": ["./**/*.ts", "../../types"]
+
 }
