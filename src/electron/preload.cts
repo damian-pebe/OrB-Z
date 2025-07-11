@@ -11,6 +11,15 @@ type EventPayloadMapping = {
   getScreenView: getScreen;
 };
 
+electron.contextBridge.exposeInMainWorld("electron", {
+  subscribeViewer: (callback) => {
+    return ipcOn("screens", (stats) => {
+      callback(stats);
+    });
+  },
+  getScreenView: () => ipcInvoke("getScreenView"),
+} satisfies Window["electron"]);
+
 function ipcInvoke<Key extends keyof EventPayloadMapping>(
   key: Key
 ): Promise<EventPayloadMapping[Key]> {
@@ -21,14 +30,9 @@ function ipcOn<Key extends keyof EventPayloadMapping>(
   key: Key,
   callback: (payload: EventPayloadMapping[Key]) => void
 ) {
-  electron.ipcRenderer.on(key, (_: any, payload: any) => callback(payload));
+  // cd === callback
+  //! this makes so the function return a function, but not call it, so we can unsub
+  const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
+  electron.ipcRenderer.on(key, cb);
+  return () => electron.ipcRenderer.off(key, cb);
 }
-
-electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeViewer: (callback) => {
-    ipcOn("screens", (stats) => {
-      callback(stats);
-    });
-  },
-  getScreenView: () => ipcInvoke("getScreenView"),
-} satisfies Window["electron"]);

@@ -10,7 +10,9 @@ export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
   key: Key,
   handler: () => EventPayloadMapping[Key]
 ) {
-  ipcMain.handle(key, () => handler());
+  ipcMain.handle(key, () => {
+    return handler();
+  });
 }
 
 export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
@@ -20,3 +22,13 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
 ) {
   webContents.send(key, payload);
 }
+
+// export function validateEventFrame(frame: WebFrameMain) {
+//   if (isDev() && new URL(frame.url).host === "localhost:5123") {
+//     return;
+//   }
+
+//   if (frame.url !== pathToFileURL(getUIPath()).toString()) {
+//     throw new Error("Malicious event");
+//   }
+// }
