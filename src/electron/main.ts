@@ -1,6 +1,6 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import path from "path";
-import { isDev } from "./util.js";
+import { ipcMainHandle, isDev } from "./util.js";
 import options from "./settings/mainWindowConfig.js";
 import { getScreenView, pollResources } from "./previewsManager.js";
 
@@ -15,17 +15,9 @@ app.on("ready", () => {
     mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
   }
 
-  pollResources(mainWindow)
-  
-  ipcMain.handle("getScreenView", () => {
-    return getScreenView()
-  });
+  pollResources(mainWindow);
+
+  ipcMainHandle("getScreenView", () => getScreenView());
 });
 
-//TODO because i remove the menu
 
-// Build your own title bar UI using HTML/CSS/React inside your app.
-
-// Add buttons for close, minimize, maximize/restore.
-
-// Hook them to Electron window APIs using ipcRenderer or @electron/remote.

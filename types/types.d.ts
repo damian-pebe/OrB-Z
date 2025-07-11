@@ -1,9 +1,15 @@
 export type screensType = {
-  promise: [string];
+  promise: getScreen[];
 };
 
 export type getScreen = {
   promise: string;
+};
+
+//TODO ALWAYS UPDATE preload.cts as well
+type EventPayloadMapping = {
+  screens: screensType;
+  getScreenView: getScreen;
 };
 
 declare global {
