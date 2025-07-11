@@ -1,19 +1,38 @@
 const electron = require("electron");
+export type screensType = {
+  promise: getScreen[];
+};
+
+export type getScreen = {
+  promise: string;
+};
+type EventPayloadMapping = {
+  screens: screensType;
+  getScreenView: getScreen;
+};
 
 electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeViewer: (callback: (statistics: any) => void) => {
-    electron.ipcRenderer.on("statistics", (_: any, stats: any) => {
+  subscribeViewer: (callback) => {
+    return ipcOn("screens", (stats) => {
       callback(stats);
     });
   },
-  getScreenView: () => console.log("static"),
-});
+  getScreenView: () => ipcInvoke("getScreenView"),
+} satisfies Window["electron"]);
 
-//? Call it from Google Dev Tools
-//* Open DevTools Ctrl+Shift+i
+function ipcOn<Key extends keyof EventPayloadMapping>(
+  key: Key,
+  callback: (payload: EventPayloadMapping[Key]) => void
+) {
+  // cd === callback
+  //! this makes so the function return a function, but not call it, so we can unsub
+  const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
+  electron.ipcRenderer.on(key, cb);
+  return () => electron.ipcRenderer.off(key, cb);
+}
 
-// electron.getScreenView();
-
-//electron.subscribeViewer((data) => {
-//     console.log("Received:", data);
-// });
+function ipcInvoke<Key extends keyof EventPayloadMapping>(
+  key: Key
+): Promise<EventPayloadMapping[Key]> {
+  return electron.ipcRenderer.invoke(key);
+}

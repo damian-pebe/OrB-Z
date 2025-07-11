@@ -1,22 +1,16 @@
 import { BrowserWindow } from "electron";
+import type { getScreen } from "../../types/types.js";
+import { ipcWebContentsSend } from "./util.js";
 
 const POLLING_INTERVAL = 500;
 
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
-    const values = await getValue();
-    // console.log(values)
-    mainWindow.webContents.send("statistics", values);
+    const values = getScreenView();
+    ipcWebContentsSend("screens", mainWindow.webContents , {promise: [values, values]});
   }, POLLING_INTERVAL);
 }
 
-function getValue() {
-  return new Promise<string>((resolve) => {
-    resolve("promise");
-  });
-}
-
-
-export function getPreviews(){
-    return getValue()
+export function getScreenView(): getScreen {
+  return { promise: "promise" };
 }
