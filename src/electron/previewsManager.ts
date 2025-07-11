@@ -4,19 +4,13 @@ const POLLING_INTERVAL = 500;
 
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
-    const values = await getValue();
-    // console.log(values)
-    mainWindow.webContents.send("statistics", values);
+    const values = await getScreenView();
+    mainWindow.webContents.send("screens", [values, values]);
   }, POLLING_INTERVAL);
 }
 
-function getValue() {
+export function getScreenView() {
   return new Promise<string>((resolve) => {
     resolve("promise");
   });
-}
-
-
-export function getPreviews(){
-    return getValue()
 }

@@ -6,6 +6,7 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "types": ["./types/types.d.ts"],
     "target": "ES2020",
     "module": "ES2020",
     "moduleResolution": "node",

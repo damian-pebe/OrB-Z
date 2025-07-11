@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
 import options from "./settings/mainWindowConfig.js";
-import { pollResources } from "./previewsManager.js";
+import { getScreenView, pollResources } from "./previewsManager.js";
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow(options);
@@ -16,6 +16,10 @@ app.on("ready", () => {
   }
 
   pollResources(mainWindow)
+  
+  ipcMain.handle("getScreenView", () => {
+    return getScreenView()
+  });
 });
 
 //TODO because i remove the menu

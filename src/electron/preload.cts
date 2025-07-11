@@ -1,12 +1,13 @@
+
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeViewer: (callback: (statistics: any) => void) => {
-    electron.ipcRenderer.on("statistics", (_: any, stats: any) => {
+  subscribeViewer: (callback: (screens: any) => void) => {
+    electron.ipcRenderer.on("screens", (_: any, stats: [string]) => {
       callback(stats);
     });
   },
-  getScreenView: () => console.log("static"),
+  getScreenView: () => electron.ipcRenderer.invoke("getScreenView"),
 });
 
 //? Call it from Google Dev Tools
