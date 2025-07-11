@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { getScreen } from "../../types/types.js";
+import type { getScreen } from "../../types/types.js";
 import { ipcWebContentsSend } from "./util.js";
 
 const POLLING_INTERVAL = 500;

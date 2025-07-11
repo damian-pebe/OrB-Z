@@ -1,5 +1,6 @@
-import { ipcMain, WebContents } from "electron";
-import { EventPayloadMapping } from "../../types/types.js";
+import { ipcMain } from "electron";
+import type { WebContents } from "electron";
+import type { EventPayloadMapping } from "../../types/types.js";
 
 export function isDev(): boolean {
   return process.env.NODE_ENV === "development";
@@ -19,4 +20,3 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
 ) {
   webContents.send(key, payload);
 }
-
