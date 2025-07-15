@@ -1,10 +1,17 @@
-import { getPreloadPath } from "./pathResolver.js";
+import { getAssetPath, getPreloadPath } from "./pathResolver.js";
+import path from "path";
 
 const baseOptions: Electron.BrowserWindowConstructorOptions = {
   width: 800,
   height: 700,
   frame: false,
   titleBarStyle: "hidden",
+  icon: path.join(
+    getAssetPath(),
+    // process.platform === "darwin" ? "orbz.png" :
+    "orbz.png"
+  ),
+
   webPreferences: {
     preload: getPreloadPath(),
   },
