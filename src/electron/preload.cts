@@ -24,7 +24,7 @@ function ipcOn<Key extends keyof EventPayloadMapping>(
   key: Key,
   callback: (payload: EventPayloadMapping[Key]) => void
 ) {
-  // cd === callback
+  // cb === callback
   //! this makes so the function return a function, but not call it, so we can unsub
   const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
   electron.ipcRenderer.on(key, cb);
