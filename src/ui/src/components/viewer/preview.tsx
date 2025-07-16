@@ -19,7 +19,7 @@ export default function PreviewScreens() {
   }, []);
 
   return (
-    <div className="text-white flex flex-col gap-2">
+    <div className="text-white flex flex-col gap-2 w-full h-full border border-white">
       preview
       <button
         onClick={() => {
