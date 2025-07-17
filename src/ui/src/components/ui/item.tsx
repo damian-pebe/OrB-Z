@@ -25,7 +25,7 @@ function ItemOption({
   return (
     <button
       onClick={onClick}
-      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 font-dancing w-full text-center text-md my-3`}
+      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 font-abril w-full text-center text-md my-3`}
     >
       {label}
     </button>
@@ -42,7 +42,7 @@ function IconItemOption({
   return (
     <button
       onClick={onClick}
-      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 px-5 font-dancing w-full text-center text-md my-3 flex justify-center items-center gap-2 group`}
+      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 px-5 font-abril w-full text-center text-md my-3 flex justify-center items-center gap-2 group`}
     >
       <span className="transform transition-transform duration-700 group-hover:-translate-x-2 ">
         {label}
@@ -63,7 +63,7 @@ function CustomItemOption({
   return (
     <button
       onClick={onClick}
-      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 font-dancing w-full text-center text-md my-3`}
+      className={`${className} backdrop-blur-md border border-white/20 shadow-lg hover:-translate-y-1 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 font-abril w-full text-center text-md my-3`}
     >
       {children}
     </button>
