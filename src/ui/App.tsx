@@ -4,12 +4,12 @@ import { Suspense, lazy } from "react";
 import Loader from "./src/components/Help/Loader";
 const Landing = lazy(() => import("./src/components/Landing/page"));
 const FontsView = lazy(() => import("./src/components/Help/fontsView"));
-const Navbar = lazy(() => import("./src/components/Navbar/page"));
+const Navbar = lazy(() => import("./src/components/Navbar/Navbar"));
 
 function App() {
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center overflow-hidden "
+      className="min-h-screen w-full bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: "url('/background.png')" }}
     >
       <BrowserRouter>
