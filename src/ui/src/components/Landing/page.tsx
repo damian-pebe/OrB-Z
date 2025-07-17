@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import PreviewScreens from "../viewer/preview";
 import GlassContainer from "../ui/glassContainer";
+import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
 
 function Landing() {
@@ -14,21 +15,32 @@ function Landing() {
         </GlassContainer>
 
         <GlassContainer className="h-full w-[20vw] flex flex-col items-center justify-center">
-          <Options />
+          <TitleWrapper label={t("title.options")}>
+            <Options />
+          </TitleWrapper>
         </GlassContainer>
       </div>
 
       <div className="w-full h-[25vh] flex items-center justify-center p-5 gap-5 font-righteous">
         <GlassContainer className="h-full w-[30vw] flex items-center justify-center">
-          saved previews
+          <GlassContainer className="h-fll w-full p-5">
+            <></>
+          </GlassContainer>
         </GlassContainer>
 
         <GlassContainer className="h-full w-[60vw] flex items-center justify-center gap-5">
           <div className="w-full flex flex-col">
             <PreviewScreens />
+            <PreviewScreens />
           </div>
-          <div className="w-full flex flex-col">second option line</div>
-          <div className="w-full flex flex-col">third option line </div>
+          <div className="w-full flex flex-col">
+            <PreviewScreens />
+            <PreviewScreens />
+          </div>
+          <div className="w-full flex flex-col">
+            <PreviewScreens />
+            <PreviewScreens />
+          </div>
         </GlassContainer>
       </div>
     </div>

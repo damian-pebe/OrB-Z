@@ -1,7 +1,10 @@
 {
     "welcome": "Welcome to OrB Z",
     "logout": "Log out",
-    "options":{
+    "title": {
+        "options": "Key Settings"
+    },
+    "options": {
         "user": "Profile",
         "review": "Videos",
         "alerts": "Alerts",
@@ -11,4 +14,3 @@
         "settings": "Settings"
     }
 }
-
