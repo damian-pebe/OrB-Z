@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { UnsubscribeFunction } from "../../../../../types/types";
-import ItemOption from "../ui/item";
+import { ItemOption } from "../ui/item";
 
 export default function PreviewScreens() {
   const unsubRef = useRef<UnsubscribeFunction>(() => {});

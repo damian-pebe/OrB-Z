@@ -1,4 +1,14 @@
 {
     "welcome": "Welcome to OrB Z",
-    "logout": "Log out"
+    "logout": "Log out",
+    "options":{
+        "user": "User Profile",
+        "review": "Review a Video",
+        "alerts": "Alerts",
+        "sound": "Sound",
+        "streams": "Streams",
+        "dashboard": "Dashboard",
+        "settings": "Settings"
+    }
 }
+
