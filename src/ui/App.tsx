@@ -1,27 +1,27 @@
-import { useTranslation } from "react-i18next";
-import ToggleTranslate from "./src/components/toggleTranslate";
-import PreviewScreens from "./src/components/viewer/preview";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 
-// const Welcome = () =>
-//   const { t } = useTranslation("common");
-
-//   return <h1>{t("welcome")}</h1>;
-// }; // Another way to use the Translation hook
+import Loader from "./src/components/Loader";
+const Landing = lazy(() => import("./src/components/Landing/page"));
+const FontsView = lazy(() => import("./src/components/fontsView"));
+const Navbar = lazy(() => import("./src/components/Navbar/page"));
 
 function App() {
-  const { t } = useTranslation("common");
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col items-center justify-between p-5 gap-5">
-      <div className="w-full h-[70vh] flex items-center justify-center p-5 gap-5 font-righteous border border-white">
-        <h1 className="flex w-full h-full border border-white">
-          {t("welcome")}
-        </h1>
-        <p className="h-full w-[30vw] border border-white">{t("logout")}</p>
-      </div>
-      <div className="w-full h-[30vh] flex items-center justify-center p-5 gap-5 font-righteous border border-white">
-        <ToggleTranslate />
-        <PreviewScreens />
-      </div>
+    <div
+      className="min-h-screen w-full bg-cover bg-center overflow-x-hidden"
+      style={{ backgroundImage: "url('/background.png')" }}
+    >
+      <BrowserRouter>
+        <Navbar />
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/dashboard" element={<FontsView />} />
+            <Route path="/loading" element={<Loader />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
     </div>
   );
 }
