@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { UnsubscribeFunction } from "../../../../../types/types";
+import { ItemOption } from "../ui/item";
 
 export default function PreviewScreens() {
   const unsubRef = useRef<UnsubscribeFunction>(() => {});
@@ -19,17 +20,12 @@ export default function PreviewScreens() {
   }, []);
 
   return (
-    <div className="text-white flex flex-col gap-2 w-full h-full">
-      preview
-      <button
-        onClick={() => {
-          unsubRef.current();
-          console.log("unsub button clicked");
-        }}
-        className="outline"
-      >
-        unsub
-      </button>
-    </div>
+    <ItemOption
+      label="Unsubscribe"
+      onClick={() => {
+        unsubRef.current();
+        console.log("unsub button clicked");
+      }}
+    />
   );
 }

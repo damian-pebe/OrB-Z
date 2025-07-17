@@ -11,7 +11,7 @@ export default function GlassContainer({
 }: GlassContainerProps) {
   return (
     <div
-      className={`backdrop-blur-md bg-white/3 border border-white/20 shadow-sm rounded-xl p-6 ${className}`}
+      className={`backdrop-blur-sm bg-white/3 border border-white/20 shadow-sm rounded-xl p-6 ${className}`}
     >
       {children}
     </div>
