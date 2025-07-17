@@ -2,8 +2,8 @@
     "welcome": "Welcome to OrB Z",
     "logout": "Log out",
     "options":{
-        "user": "User Profile",
-        "review": "Review a Video",
+        "user": "Profile",
+        "review": "Videos",
         "alerts": "Alerts",
         "sound": "Sound",
         "streams": "Streams",

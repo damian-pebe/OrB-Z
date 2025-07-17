@@ -9,7 +9,7 @@ const Navbar = lazy(() => import("./src/components/Navbar/page"));
 function App() {
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center overflow-x-hidden"
+      className="min-h-screen w-full bg-cover bg-center overflow-hidden "
       style={{ backgroundImage: "url('/background.png')" }}
     >
       <BrowserRouter>
