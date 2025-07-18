@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import PreviewScreens from "../viewer/preview";
 import GlassContainer from "../ui/glassContainer";
 import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
 import ViewsList from "./Components/Views";
+import GeneralSettings from "./Components/GeneralSettings";
 
 function Landing() {
   const { t } = useTranslation("common");
@@ -24,23 +24,15 @@ function Landing() {
       </div>
 
       <div className="w-full h-[25vh] flex items-center justify-center p-5 gap-5 font-righteous">
-        <GlassContainer padding="p-2" className="h-full w-[20vw] flex items-center justify-center">
+        <GlassContainer
+          padding="p-2"
+          className="h-full w-[20vw] flex items-center justify-center"
+        >
           <ViewsList />
         </GlassContainer>
 
-        <GlassContainer className="h-full w-[70vw] flex items-center justify-center gap-5">
-          <div className="w-full flex flex-col">
-            <PreviewScreens />
-            <PreviewScreens />
-          </div>
-          <div className="w-full flex flex-col">
-            <PreviewScreens />
-            <PreviewScreens />
-          </div>
-          <div className="w-full flex flex-col">
-            <PreviewScreens />
-            <PreviewScreens />
-          </div>
+        <GlassContainer className="h-full w-[70vw]">
+         <GeneralSettings/>
         </GlassContainer>
       </div>
     </div>
