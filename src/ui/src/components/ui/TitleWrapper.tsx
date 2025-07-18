@@ -1,4 +1,5 @@
 import * as React from "react";
+import Separator from "./separator";
 
 interface GlassContainerProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ export default function TitleWrapper({
   return (
     <div className={`flex flex-col justify-center items-center ${className}`}>
       <div>{label}</div>
-      <div className={`${lineClassName} h-0.5 bg-white/20 w-full mb-5 mt-1 `} />
+      <Separator className={lineClassName} />
       {children}
     </div>
   );
