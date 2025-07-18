@@ -5,6 +5,10 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "composite": true,
     "types": ["./types/types.d.ts"],
     "target": "ES2020",
