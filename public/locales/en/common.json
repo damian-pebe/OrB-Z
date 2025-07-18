@@ -4,6 +4,18 @@
     "title": {
         "options": "Key Settings"
     },
+    "llm" : {
+        "enabled": "Enable AI Model",
+        "disabled": "Disable AI Model",
+        "title": "LLM Settings",
+        "description": "Configure your LLM settings here.",
+        "model": "Model",
+        "temperature": "Temperature",
+        "maxTokens": "Max Tokens",
+        "topP": "Top P",
+        "frequencyPenalty": "Frequency Penalty",
+        "presencePenalty": "Presence Penalty"
+    },
     "options": {
         "user": "Profile",
         "review": "Videos",
@@ -12,5 +24,10 @@
         "streams": "Streams",
         "dashboard": "Dashboard",
         "settings": "Settings"
+    },
+    "view": {
+        "add": "Add View",
+        "template": "Create Template",
+        "edit-templates": "Edit Templates"
     }
 }
