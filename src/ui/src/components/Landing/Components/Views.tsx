@@ -1,4 +1,11 @@
-import { LockOpen, Lock, Eye, EyeOff, Trash2 } from "lucide-react";
+import {
+  LockOpen,
+  Lock,
+  Eye,
+  EyeOff,
+  Trash2,
+  PlusCircleIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Checkbox } from "../../../../../components/ui/checkbox";
 
@@ -6,7 +13,7 @@ export default function ViewsList() {
   const initialScreens = [
     { name: "Screen 1", locked: null },
     { name: "Screen 2", locked: true },
-    { name: "Screen 3", locked: null },
+    { name: "ScreeEEEEEEEEEEEEEEEEEEEn 3", locked: null },
     { name: "Screen 4", locked: true },
     { name: "Screen 5", locked: null },
     { name: "Screen 6", locked: null },
@@ -84,49 +91,60 @@ export default function ViewsList() {
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto">
-      {screens.map((screen, index) => {
-        const isLocked = locks[index];
-        const isVisible = visibility[index];
-        const lockPressed = pressedLocks[index] ? "-translate-y-0.5" : "";
-        const visPressed = pressedVisibility[index] ? "-translate-y-0.5" : "";
-        const delPressed = pressedDelete[index] ? "-translate-y-0.5" : "";
+    <div className="w-full h-full flex justify-between gap-2">
+      <div className="h-full min-w-3xl overflow-y-auto">
+        {screens.map((screen, index) => {
+          const isLocked = locks[index];
+          const isVisible = visibility[index];
+          const lockPressed = pressedLocks[index] ? "-translate-y-0.5" : "";
+          const visPressed = pressedVisibility[index] ? "-translate-y-0.5" : "";
+          const delPressed = pressedDelete[index] ? "-translate-y-0.5" : "";
 
-        return (
-          <div
-            key={index}
-            className="flex items-center gap-2 text-xs text-white"
-          >
-            <Checkbox
-              id={`item-${index}`}
-              className="transition-all duration-700"
-            />
-            <div className="flex-1 mt-1 font-nunito">{screen.name}</div>
-            <button
-              onClick={() => removeScreen(index)}
-              className={`text-white transition-transform duration-150 hover:cursor-pointer ${delPressed}`}
-              aria-label="Delete"
+          return (
+            <div
+              key={index}
+              className="flex items-center gap-2 text-xs text-white"
             >
-              <Trash2 size={16} />
-            </button>
-            <button
-              onClick={() => toggleVisibility(index)}
-              className={`text-white transition-transform duration-150 hover:cursor-pointer ${visPressed}`}
-              aria-label={isVisible ? "Hide" : "Show"}
-            >
-              {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-            </button>
+              <Checkbox
+                id={`item-${index}`}
+                className="transition-all duration-700"
+              />
+              <div className="flex mt-1 w-15 font-nunito truncate overflow-hidden whitespace-nowrap">
+                {screen.name}
+              </div>
+              <button
+                onClick={() => removeScreen(index)}
+                className={`text-white transition-transform duration-150 hover:cursor-pointer ${delPressed}`}
+                aria-label="Delete"
+              >
+                <Trash2 size={16} />
+              </button>
+              <button
+                onClick={() => toggleVisibility(index)}
+                className={`text-white transition-transform duration-150 hover:cursor-pointer ${visPressed}`}
+                aria-label={isVisible ? "Hide" : "Show"}
+              >
+                {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
+              </button>
 
-            <button
-              onClick={() => toggleLock(index)}
-              className={`text-white transition-transform duration-150 hover:cursor-pointer mr-3 ${lockPressed}`}
-              aria-label={isLocked ? "Unlock" : "Lock"}
-            >
-              {isLocked ? <LockOpen size={16} /> : <Lock size={16} />}
-            </button>
-          </div>
-        );
-      })}
+              <button
+                onClick={() => toggleLock(index)}
+                className={`text-white transition-transform duration-150 hover:cursor-pointer mr-5 ${lockPressed}`}
+                aria-label={isLocked ? "Unlock" : "Lock"}
+              >
+                {isLocked ? <LockOpen size={16} /> : <Lock size={16} />}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <button
+        onClick={() => {}}
+        className="absolute top- right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
+      >
+        <PlusCircleIcon />
+      </button>
+      {/* <PreviewScreens /> */}
     </div>
   );
 }

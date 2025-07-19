@@ -6,9 +6,10 @@ export type screensType = {
 export type getScreen = {
   promise: string;
 };
+
 type EventPayloadMapping = {
   screens: screensType;
-  getScreenView: getScreen;
+  getScreenView: getScreen[];
 };
 
 electron.contextBridge.exposeInMainWorld("electron", {

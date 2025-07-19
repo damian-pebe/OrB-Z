@@ -9,7 +9,7 @@ export type getScreen = {
 
 type EventPayloadMapping = {
   screens: screensType;
-  getScreenView: getScreen;
+  getScreenView: getScreen[];
 };
 
 //TODO UNTIL HERE
@@ -22,7 +22,7 @@ declare global {
       subscribeViewer: (
         callback: (screens: screensType) => void
       ) => UnsubscribeFunction;
-      getScreenView: () => Promise<getScreen>;
+      getScreenView: () => Promise<getScreen[]>;
     };
   }
 }
