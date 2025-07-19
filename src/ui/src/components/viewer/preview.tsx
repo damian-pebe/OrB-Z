@@ -35,9 +35,10 @@ export default function PreviewScreens() {
       />
 
       <div className="text-white text-xs">
-        {stats?.promise.map((screen, idx) => (
-          <div key={idx}>• {screen.promise}</div>
-        ))}
+        {stats ? `Received ${stats.promise.length} screens` : "No screens received"}
+        {/* {stats?.promise.map((screen, idx) => (
+          <div key={idx}>• {screen.type}</div>
+        ))} */}
       </div>
     </div>
   );

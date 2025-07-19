@@ -16,6 +16,7 @@ export function createTray(mainWindow: BrowserWindow) {
       {
         label: "Open OrB Z",
         click: () => {
+          mainWindow.show();
           app.show();
           if (app.dock) {
             app.dock.show();
