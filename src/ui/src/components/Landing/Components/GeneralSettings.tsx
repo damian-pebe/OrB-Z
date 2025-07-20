@@ -1,12 +1,10 @@
 import {
   BookMarkedIcon,
   BookmarkPlus,
-  PlusCircleIcon,
   Power,
   PowerOff,
 } from "lucide-react";
 import { IconItemOption } from "../../ui/item";
-import PreviewScreens from "../../viewer/preview";
 import { useTranslation } from "react-i18next";
 
 export default function GeneralSettings() {
@@ -14,14 +12,6 @@ export default function GeneralSettings() {
 
   return (
     <div className="h-full flex items-center justify-center gap-5">
-      <div className="w-full flex flex-col">
-        <IconItemOption
-          label={t("view.add")}
-          icon={<PlusCircleIcon />}
-          onClick={() => {}}
-        />
-        <PreviewScreens />
-      </div>
       <div className="w-full flex flex-col">
         <IconItemOption
           label={t("view.template")}

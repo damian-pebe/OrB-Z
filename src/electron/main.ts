@@ -27,7 +27,7 @@ app.on("ready", () => {
 
 function handleCloseEvents(mainWindow: BrowserWindow) {
   let willClose = false;
-
+  console.log(willClose)
   mainWindow.on("close", (e) => {
     e.preventDefault();
     mainWindow.hide();
@@ -38,9 +38,11 @@ function handleCloseEvents(mainWindow: BrowserWindow) {
 
   app.on("before-quit", () => {
     willClose = true;
+    console.log("App is quitting, closing main window.");
   });
 
   mainWindow.on("show", () => {
     willClose = false;
+    console.log("Main window is shown.");
   });
 }

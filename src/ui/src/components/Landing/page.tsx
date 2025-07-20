@@ -4,6 +4,7 @@ import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
 import ViewsList from "./Components/Views";
 import GeneralSettings from "./Components/GeneralSettings";
+import PreviewScreens from "../viewer/preview";
 
 function Landing() {
   const { t } = useTranslation("common");
@@ -14,6 +15,7 @@ function Landing() {
         <GlassContainer className="h-full w-[70vw] flex flex-col items-center justify-center">
           <h1 className="text-4xl text-white">{t("welcome")}</h1>
           here ill set the main preview
+          <PreviewScreens />
         </GlassContainer>
 
         <GlassContainer className="h-full w-[20vw] flex flex-col items-center justify-center">
@@ -26,13 +28,13 @@ function Landing() {
       <div className="w-full h-[25vh] flex items-center justify-center p-5 gap-5 font-righteous">
         <GlassContainer
           padding="p-2"
-          className="h-full w-[20vw] flex items-center justify-center"
+          className="h-full w-[30vw] flex items-center justify-center"
         >
           <ViewsList />
         </GlassContainer>
 
-        <GlassContainer className="h-full w-[70vw]">
-         <GeneralSettings/>
+        <GlassContainer className="h-full w-[60vw]">
+          <GeneralSettings />
         </GlassContainer>
       </div>
     </div>
