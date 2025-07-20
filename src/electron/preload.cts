@@ -7,6 +7,7 @@ export type screensType = {
 export type ScreenItem = {
   type: "screen";
   id: number;
+  title?: string;
   width: number;
   height: number;
   x: number;

@@ -35,10 +35,27 @@ export default function PreviewScreens() {
       />
 
       <div className="text-white text-xs">
-        {stats ? `Received ${stats.promise.length} screens` : "No screens received"}
-        {/* {stats?.promise.map((screen, idx) => (
-          <div key={idx}>• {screen.type}</div>
-        ))} */}
+        {stats ? (
+          <>
+            <div>Received {stats.promise.length} items</div>
+            <div className="mt-2 font-semibold">Screens:</div>
+            {stats.promise
+              .filter((item) => item.type === "screen")
+              .map((screen, idx) => (
+                <div key={`screen-${idx}`}>
+                  • {screen.title ?? `Screen ${idx + 1}`}
+                </div>
+              ))}
+            <div className="mt-2 font-semibold">Windows:</div>
+            {stats.promise
+              .filter((item) => item.type === "window")
+              .map((window, idx) => (
+                <div key={`window-${idx}`}>• {window.title}</div>
+              ))}
+          </>
+        ) : (
+          <div>No screens received</div>
+        )}
       </div>
     </div>
   );
