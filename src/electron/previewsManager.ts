@@ -46,6 +46,7 @@ export function getScreenView(): getScreen[] {
         "filter application windows",
         "picture in picture",
         "task switching",
+        "orb z" //APP NAME CAUSE WE WONT RE-STREAM IT 
       ];
 
       const titleLower = title.toLowerCase();

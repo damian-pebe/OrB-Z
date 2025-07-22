@@ -4,7 +4,7 @@ import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
 import ViewsList from "./Components/Views";
 import GeneralSettings from "./Components/GeneralSettings";
-import PreviewScreens from "../viewer/preview";
+import PreviewScreens from "./Components/ModifyViews/preview";
 
 function Landing() {
   const { t } = useTranslation("common");
