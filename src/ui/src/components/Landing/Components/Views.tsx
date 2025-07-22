@@ -1,26 +1,12 @@
-import {
-  LockOpen,
-  Lock,
-  Eye,
-  EyeOff,
-  Trash2,
-  PlusCircleIcon,
-} from "lucide-react";
+import { LockOpen, Lock, Eye, EyeOff, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Checkbox } from "../../../../../components/ui/checkbox";
+import AddViews from "./ModifyViews/AddViews";
 
 export default function ViewsList() {
-  const initialScreens = [
-    { name: "Screen 1", locked: null },
-    { name: "Screen 2", locked: true },
-    { name: "ScreeEEEEEEEEEEEEEEEEEEEn 3", locked: null },
-    { name: "Screen 4", locked: true },
-    { name: "Screen 5", locked: null },
-    { name: "Screen 6", locked: null },
-    { name: "Screen 7", locked: null },
-    { name: "Screen 8", locked: null },
-    { name: "Screen 9", locked: null },
-  ];
+  // Example initial screens
+  //TODO: Replace with actual data fetching logic from preferences
+  const initialScreens = [{ name: "Screen 1", locked: null }];
 
   const [screens, setScreens] = useState(initialScreens);
   const [locks, setLocks] = useState<boolean[]>(
@@ -90,6 +76,15 @@ export default function ViewsList() {
     }, 150);
   };
 
+  const handleAddView = (name: string) => {
+    setScreens((prev) => [...prev, { name, locked: null }]);
+    setLocks((prev) => [...prev, false]);
+    setVisibility((prev) => [...prev, true]);
+    setPressedLocks((prev) => [...prev, false]);
+    setPressedVisibility((prev) => [...prev, false]);
+    setPressedDelete((prev) => [...prev, false]);
+  };
+
   return (
     <div className="w-full h-full flex justify-between gap-2">
       <div className="h-full min-w-3xl overflow-y-auto">
@@ -138,12 +133,8 @@ export default function ViewsList() {
           );
         })}
       </div>
-      <button
-        onClick={() => {}}
-        className="absolute top- right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
-      >
-        <PlusCircleIcon />
-      </button>
+
+      <AddViews onAdd={handleAddView} />
       {/* <PreviewScreens /> */}
     </div>
   );

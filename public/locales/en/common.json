@@ -4,7 +4,7 @@
     "title": {
         "options": "Key Settings"
     },
-    "llm" : {
+    "llm": {
         "enabled": "Enable AI Model",
         "disabled": "Disable AI Model",
         "title": "LLM Settings",
@@ -28,6 +28,11 @@
     "view": {
         "add": "Add View",
         "template": "Create Template",
-        "edit-templates": "Edit Templates"
+        "edit-templates": "Edit Templates",
+        "add_preview": "Add View to the Preview",
+        "add_preview_description": "Select a Screen or Windows to add to the preview",
+        "selected_view": "Selected View",
+        "screens": "Screens",
+        "window": "Window"
     }
 }
