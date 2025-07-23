@@ -27,6 +27,7 @@
     },
     "view": {
         "add": "Add View",
+        "add_views_to_preview": "Add Windows to See the Preview",
         "template": "Create Template",
         "edit-templates": "Edit Templates",
         "add_preview": "Add View to the Preview",
