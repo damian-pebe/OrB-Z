@@ -31,7 +31,7 @@
         "edit-templates": "Edit Templates",
         "add_preview": "Add View to the Preview",
         "add_preview_description": "Select a Screen or Windows to add to the preview",
-        "selected_view": "Selected View",
+        "selected_view": "Selected View: ",
         "screens": "Screens",
         "window": "Window"
     }

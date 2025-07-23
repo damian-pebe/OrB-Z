@@ -1,36 +1,17 @@
-import { useEffect, useRef, useState } from "react";
-import type { screensType, UnsubscribeFunction } from "../../../../../../../types/types";
+import { useEffect } from "react";
 import { ItemOption } from "../../../ui/item";
-
+import { useViews } from "./hooks/useViews";
 
 export default function PreviewScreens() {
-  const unsubRef = useRef<UnsubscribeFunction>(() => {});
-  const [stats, setStats] = useState<screensType | null>(null);
+  const { stats, unsubscribe } = useViews();
 
   useEffect(() => {
-    console.log("start subscribeViewer");
-
-    unsubRef.current = window.electron.subscribeViewer((incomingStats) => {
-      console.log("RECEIVED STATS:", incomingStats);
-      setStats(incomingStats);
-    });
-
-    console.log("RETURNING subscribeViewer");
-
-    return () => {
-      unsubRef.current();
-    };
+    console.log(stats);
   }, []);
 
   return (
     <div className="flex flex-col gap-2">
-      <ItemOption
-        label="Unsubscribe"
-        onClick={() => {
-          unsubRef.current();
-          console.log("unsub button clicked");
-        }}
-      />
+      <ItemOption label="Unsubscribe" onClick={unsubscribe} />
 
       <div className="text-white text-xs">
         {stats ? (
