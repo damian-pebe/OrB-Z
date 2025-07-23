@@ -3,96 +3,53 @@ import { useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
 import AddViews from "./AddViews";
 
+import {
+  animatePress,
+  toggleStateAt,
+  removeItemAtIndex,
+  addItem,
+} from "./lib/util";
+import type { ScreenState } from "./types/types";
+
 export default function ViewsList() {
-  // Example initial screens
-  const initialScreens = [{ name: "Screen 1", locked: null }];
+  const initialScreens: ScreenState[] = [];
 
-  const [screens, setScreens] = useState(initialScreens);
-  const [locks, setLocks] = useState<boolean[]>(
-    initialScreens.map((screen) => screen.locked ?? false)
-  );
-  const [visibility, setVisibility] = useState<boolean[]>(
-    initialScreens.map(() => true)
-  );
-
-  const [pressedLocks, setPressedLocks] = useState<boolean[]>(
-    initialScreens.map(() => false)
-  );
-  const [pressedVisibility, setPressedVisibility] = useState<boolean[]>(
-    initialScreens.map(() => false)
-  );
-  const [pressedDelete, setPressedDelete] = useState<boolean[]>(
-    initialScreens.map(() => false)
-  );
-
-  const animatePress = (
-    setter: React.Dispatch<React.SetStateAction<boolean[]>>,
-    index: number
-  ) => {
-    setter((prev) => {
-      const updated = [...prev];
-      updated[index] = true;
-      return updated;
-    });
-    setTimeout(() => {
-      setter((prev) => {
-        const updated = [...prev];
-        updated[index] = false;
-        return updated;
-      });
-    }, 150);
-  };
+  const [screens, setScreens] = useState<ScreenState[]>(initialScreens);
 
   const toggleLock = (index: number) => {
-    animatePress(setPressedLocks, index);
-    setLocks((prev) => {
-      const updated = [...prev];
-      updated[index] = !updated[index];
-      return updated;
-    });
+    animatePress(setScreens, index, "pressedLock");
+    toggleStateAt(setScreens, index, "locked");
   };
 
   const toggleVisibility = (index: number) => {
-    animatePress(setPressedVisibility, index);
-    setVisibility((prev) => {
-      const updated = [...prev];
-      updated[index] = !updated[index];
-      console.log(`Visibility for ${screens[index].name}:`, updated[index]);
-      return updated;
-    });
+    animatePress(setScreens, index, "pressedVisibility");
+    toggleStateAt(setScreens, index, "visible");
   };
 
   const removeScreen = (index: number) => {
-    animatePress(setPressedDelete, index);
-    setTimeout(() => {
-      setScreens((prev) => prev.filter((_, i) => i !== index));
-      setLocks((prev) => prev.filter((_, i) => i !== index));
-      setVisibility((prev) => prev.filter((_, i) => i !== index));
-      setPressedLocks((prev) => prev.filter((_, i) => i !== index));
-      setPressedVisibility((prev) => prev.filter((_, i) => i !== index));
-      setPressedDelete((prev) => prev.filter((_, i) => i !== index));
-      console.log(`Removed screen at index ${index}`);
-    }, 150);
+    animatePress(setScreens, index, "pressedDelete");
+    removeItemAtIndex(index, [setScreens]);
   };
 
   const handleAddView = (name: string) => {
-    setScreens((prev) => [...prev, { name, locked: null }]);
-    setLocks((prev) => [...prev, false]);
-    setVisibility((prev) => [...prev, true]);
-    setPressedLocks((prev) => [...prev, false]);
-    setPressedVisibility((prev) => [...prev, false]);
-    setPressedDelete((prev) => [...prev, false]);
+    const newItem: ScreenState = {
+      name,
+      locked: false,
+      visible: true,
+      pressedLock: false,
+      pressedVisibility: false,
+      pressedDelete: false,
+    };
+    addItem(newItem, [setScreens]);
   };
 
   return (
     <div className="w-full h-full flex justify-between gap-2">
       <div className="h-full min-w-3xl overflow-y-auto">
         {screens.map((screen, index) => {
-          const isLocked = locks[index];
-          const isVisible = visibility[index];
-          const lockPressed = pressedLocks[index] ? "-translate-y-0.5" : "";
-          const visPressed = pressedVisibility[index] ? "-translate-y-0.5" : "";
-          const delPressed = pressedDelete[index] ? "-translate-y-0.5" : "";
+          const lockPressed = screen.pressedLock ? "-translate-y-0.5" : "";
+          const visPressed = screen.pressedVisibility ? "-translate-y-0.5" : "";
+          const delPressed = screen.pressedDelete ? "-translate-y-0.5" : "";
 
           return (
             <div
@@ -116,17 +73,16 @@ export default function ViewsList() {
               <button
                 onClick={() => toggleVisibility(index)}
                 className={`text-white transition-transform duration-150 hover:cursor-pointer ${visPressed}`}
-                aria-label={isVisible ? "Hide" : "Show"}
+                aria-label={screen.visible ? "Hide" : "Show"}
               >
-                {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
+                {screen.visible ? <Eye size={16} /> : <EyeOff size={16} />}
               </button>
-
               <button
                 onClick={() => toggleLock(index)}
                 className={`text-white transition-transform duration-150 hover:cursor-pointer mr-5 ${lockPressed}`}
-                aria-label={isLocked ? "Unlock" : "Lock"}
+                aria-label={screen.locked ? "Unlock" : "Lock"}
               >
-                {isLocked ? <LockOpen size={16} /> : <Lock size={16} />}
+                {screen.locked ? <LockOpen size={16} /> : <Lock size={16} />}
               </button>
             </div>
           );
@@ -134,7 +90,6 @@ export default function ViewsList() {
       </div>
 
       <AddViews onAdd={handleAddView} />
-      {/* <PreviewScreens /> */}
     </div>
   );
 }
