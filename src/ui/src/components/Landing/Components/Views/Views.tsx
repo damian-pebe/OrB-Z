@@ -1,7 +1,7 @@
 import { LockOpen, Lock, Eye, EyeOff, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Checkbox } from "../../../../../components/ui/checkbox";
-import AddViews from "./ModifyViews/AddViews";
+import { Checkbox } from "../../../../../../components/ui/checkbox";
+import AddViews from "./AddViews";
 
 export default function ViewsList() {
   // Example initial screens
