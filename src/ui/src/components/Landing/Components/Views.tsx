@@ -5,7 +5,6 @@ import AddViews from "./ModifyViews/AddViews";
 
 export default function ViewsList() {
   // Example initial screens
-  //TODO: Replace with actual data fetching logic from preferences
   const initialScreens = [{ name: "Screen 1", locked: null }];
 
   const [screens, setScreens] = useState(initialScreens);
