@@ -19,28 +19,28 @@ interface AddViewsProps {
 
 export default function AddViews({ onAdd }: AddViewsProps) {
   const { t } = useTranslation("common");
-const [selectedItem, setSelectedItem] = useState<{
-  type: "screen" | "window";
-  id?: number;
-  title?: string;
-} | null>(null);
+  const [selectedItem, setSelectedItem] = useState<{
+    type: "screen" | "window";
+    id?: number;
+    title?: string;
+  } | null>(null);
 
   const { stats, unsubscribe } = useViews();
- 
- const handleSave = () => {
-   if (selectedItem) {
-     const valueToSave =
-       selectedItem.type === "screen"
-         ? String(selectedItem.id)
-         : selectedItem.title ?? "";
 
-     if (valueToSave) {
-       onAdd(valueToSave);
-       setSelectedItem(null);
-       unsubscribe();
-     }
-   }
- };
+  const handleSave = () => {
+    if (selectedItem) {
+      const valueToSave =
+        selectedItem.type === "screen"
+          ? String(selectedItem.id)
+          : selectedItem.title ?? "";
+
+      if (valueToSave) {
+        onAdd(valueToSave);
+        setSelectedItem(null);
+        unsubscribe();
+      }
+    }
+  };
 
   const handleClose = () => {
     unsubscribe();

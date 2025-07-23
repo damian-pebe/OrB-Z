@@ -2,9 +2,9 @@ import { useTranslation } from "react-i18next";
 import GlassContainer from "../ui/glassContainer";
 import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
-import ViewsList from "./Components/Views";
 import GeneralSettings from "./Components/GeneralSettings";
-import PreviewScreens from "./Components/ModifyViews/preview";
+import PreviewScreens from "./Components/Views/Preview";
+import ViewsList from "./Components/Views/Views";
 
 function Landing() {
   const { t } = useTranslation("common");
