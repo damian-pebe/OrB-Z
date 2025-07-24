@@ -14,6 +14,7 @@ const baseOptions: Electron.BrowserWindowConstructorOptions = {
 
   webPreferences: {
     preload: getPreloadPath(),
+    
   },
 };
 
