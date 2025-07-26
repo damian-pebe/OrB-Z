@@ -3,7 +3,7 @@ import GlassContainer from "../ui/glassContainer";
 import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
 import GeneralSettings from "./Components/GeneralSettings";
-import PreviewScreens from "./Components/Views/Preview";
+// import PreviewScreens from "./Components/Views/Preview";
 import ViewsList from "./Components/Views/Views";
 import ScreenCapture from "./Components/Views/PreviewExample";
 
@@ -17,7 +17,7 @@ function Landing() {
           <h1 className="text-4xl text-white">{t("welcome")}</h1>
           here ill set the main preview
           {/* <PreviewScreens /> */}
-       <ScreenCapture/>
+          <ScreenCapture />
         </GlassContainer>
 
         <GlassContainer className="h-full w-[20vw] flex flex-col items-center justify-center">
