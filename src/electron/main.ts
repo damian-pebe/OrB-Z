@@ -4,27 +4,54 @@ import { ipcMainHandle, isDev } from "./util.js";
 import options from "./settings/mainWindowConfig.js";
 import { getScreenView, pollResources } from "./previewsManager.js";
 import { createTray } from "./settings/tray.js";
+import { fetchDesktopSources } from "./lib/desktopSources.js";
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow(options);
   // mainWindow.setMenuBarVisibility(false);
   mainWindow.setAutoHideMenuBar(false);
 
-  session.defaultSession.setDisplayMediaRequestHandler(
-    (request, callback) => {
-      desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
+  // session.defaultSession.setDisplayMediaRequestHandler(
+  //   (_, callback) => {
+  //     desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
+  //       if (sources.length > 0) {
+  //         callback({
+  //           video: sources[0],
+  //           audio: "loopback",
+  //         });
+  //       } else {
+  //         callback({ video: undefined, audio: undefined });
+  //       }
+  //     });
+  //   },
+  //   { useSystemPicker: false }
+  // );
+
+  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
+    console.log("[Electron] Handling display media request");
+
+    // Just return the first screen by default (or you can hardcode test ID if needed)
+    desktopCapturer
+      .getSources({ types: ["screen", "window"] })
+      .then((sources) => {
+        console.log(
+          "[Electron] Available sources:",
+          sources.map((s) => s.id)
+        );
+
         if (sources.length > 0) {
+          const defaultSource = sources[0];
+
           callback({
-            video: sources[0],
-            audio: "loopback",
+            video: defaultSource,
           });
         } else {
-          callback({ video: undefined, audio: undefined });
+          callback({
+            video: undefined,
+          });
         }
       });
-    },
-    { useSystemPicker: false }
-  );
+  });
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");
@@ -35,6 +62,7 @@ app.on("ready", () => {
   pollResources(mainWindow);
 
   ipcMainHandle("getScreenView", () => getScreenView());
+  ipcMainHandle("getDesktopSources", () => fetchDesktopSources());
 
   createTray(mainWindow);
 

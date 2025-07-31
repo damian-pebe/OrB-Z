@@ -25,37 +25,55 @@ export type WindowItem = {
   y: number;
 };
 
+export type DesktopSource = {
+  id: string;
+  name: string;
+  type: "screen" | "window";
+  thumbnail: string;
+};
+
 export type getScreen = ScreenItem | WindowItem;
 
 type EventPayloadMapping = {
   screens: screensType;
   getScreenView: getScreen[];
+  getDesktopSources: DesktopSource[];
 };
 
+const { contextBridge, ipcRenderer } = electron;
 
-
-electron.contextBridge.exposeInMainWorld("electron", {
+contextBridge.exposeInMainWorld("electron", {
   subscribeViewer: (callback) => {
     return ipcOn("screens", (stats) => {
       callback(stats);
     });
   },
   getScreenView: () => ipcInvoke("getScreenView"),
+
+  // Add the missing methods here:
+  invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args),
+
+  previewDesktopSource: (sourceId: string) => {
+    window.dispatchEvent(
+      new CustomEvent("source-selected", { detail: sourceId })
+    );
+  },
 } satisfies Window["electron"]);
+
+// ipc helpers
 
 function ipcOn<Key extends keyof EventPayloadMapping>(
   key: Key,
   callback: (payload: EventPayloadMapping[Key]) => void
 ) {
-  // cb === callback
-  //! this makes so the function return a function, but not call it, so we can unsub
   const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
-  electron.ipcRenderer.on(key, cb);
-  return () => electron.ipcRenderer.off(key, cb);
+  ipcRenderer.on(key, cb);
+  return () => ipcRenderer.off(key, cb);
 }
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(
-  key: Key
+  key: Key,
+  ...args: unknown[]
 ): Promise<EventPayloadMapping[Key]> {
-  return electron.ipcRenderer.invoke(key);
+  return ipcRenderer.invoke(key, ...args);
 }
