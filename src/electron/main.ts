@@ -11,47 +11,47 @@ app.on("ready", () => {
   // mainWindow.setMenuBarVisibility(false);
   mainWindow.setAutoHideMenuBar(false);
 
-  // session.defaultSession.setDisplayMediaRequestHandler(
-  //   (_, callback) => {
-  //     desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
+  // session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
+  //   console.log("[Electron] Handling display media request");
+
+  //   // Just return the first screen by default (or you can hardcode test ID if needed)
+  //   desktopCapturer
+  //     .getSources({ types: ["screen", "window"] })
+  //     .then((sources) => {
+  //       console.log(
+  //         "[Electron] Available sources:",
+  //         sources.map((s) => s.id)
+  //       );
+
   //       if (sources.length > 0) {
+  //         const defaultSource = sources[0];
+
   //         callback({
-  //           video: sources[0],
-  //           audio: "loopback",
+  //           video: defaultSource,
   //         });
   //       } else {
-  //         callback({ video: undefined, audio: undefined });
+  //         callback({
+  //           video: undefined,
+  //         });
   //       }
   //     });
-  //   },
-  //   { useSystemPicker: false }
-  // );
+  // });
 
-  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
-    console.log("[Electron] Handling display media request");
-
-    // Just return the first screen by default (or you can hardcode test ID if needed)
-    desktopCapturer
-      .getSources({ types: ["screen", "window"] })
-      .then((sources) => {
-        console.log(
-          "[Electron] Available sources:",
-          sources.map((s) => s.id)
-        );
-
+  session.defaultSession.setDisplayMediaRequestHandler(
+    (_, callback) => {
+      desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
         if (sources.length > 0) {
-          const defaultSource = sources[0];
-
           callback({
-            video: defaultSource,
+            video: sources[0],
+            audio: "loopback",
           });
         } else {
-          callback({
-            video: undefined,
-          });
+          callback({ video: undefined, audio: undefined });
         }
       });
-  });
+    },
+    { useSystemPicker: false }
+  );
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");
