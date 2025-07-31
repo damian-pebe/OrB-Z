@@ -14,6 +14,10 @@ const baseOptions: Electron.BrowserWindowConstructorOptions = {
 
   webPreferences: {
     preload: getPreloadPath(),
+    contextIsolation: true,
+    nodeIntegration: false,
+    webSecurity: true,
+    sandbox: false,
   },
 };
 
