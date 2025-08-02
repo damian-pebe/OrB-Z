@@ -15,9 +15,22 @@ import { useScreenStore } from "../../../../stores/index";
 
 export default function ViewsList() {
   const { t } = useTranslation("common");
-  const initialScreens: ScreenState[] = [];
+  const [screens, setScreens] = useState<ScreenState[]>([]);
 
-  const [screens, setScreens] = useState<ScreenState[]>(initialScreens);
+  const screenSources = useScreenStore((state) => state.screenSources);
+  useEffect(() => {
+    const restoredScreens = screenSources.map((source) => ({
+      id: source.id,
+      name: source.name,
+      locked: false,
+      visible: true,
+      pressedLock: false,
+      pressedVisibility: false,
+      pressedDelete: false,
+    }));
+
+    setScreens(restoredScreens);
+  }, []);
 
   useEffect(() => {
     const sources = useScreenStore.getState().getScreenSources();

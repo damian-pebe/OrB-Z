@@ -19,7 +19,7 @@ export default function ScreenCapture() {
             chromeMediaSourceId: testSourceId,
             maxWidth: 1920,
             maxHeight: 1080,
-            maxFrameRate: 120,
+            maxFrameRate: 240,
           },
         },
       });
