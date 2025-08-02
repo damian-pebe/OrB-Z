@@ -37,22 +37,6 @@ app.on("ready", () => {
   //     });
   // });
 
-  session.defaultSession.setDisplayMediaRequestHandler(
-    (_, callback) => {
-      desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
-        if (sources.length > 0) {
-          callback({
-            video: sources[0],
-            audio: "loopback",
-          });
-        } else {
-          callback({ video: undefined, audio: undefined });
-        }
-      });
-    },
-    { useSystemPicker: false }
-  );
-
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");
   } else {

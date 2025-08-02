@@ -40,7 +40,7 @@ type EventPayloadMapping = {
   getDesktopSources: DesktopSource[];
 };
 
-const { contextBridge, ipcRenderer } = electron;
+const { contextBridge, ipcRenderer, desktopCapturer } = electron;
 
 contextBridge.exposeInMainWorld("electron", {
   subscribeViewer: (callback) => {
@@ -50,7 +50,6 @@ contextBridge.exposeInMainWorld("electron", {
   },
   getScreenView: () => ipcInvoke("getScreenView"),
 
-  // Add the missing methods here:
   invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args),
 
   previewDesktopSource: (sourceId: string) => {
@@ -58,6 +57,8 @@ contextBridge.exposeInMainWorld("electron", {
       new CustomEvent("source-selected", { detail: sourceId })
     );
   },
+
+  getSourceById: (id: string) => ipcRenderer.invoke("getDesktopSourceById", id),
 } satisfies Window["electron"]);
 
 // ipc helpers
@@ -76,4 +77,13 @@ function ipcInvoke<Key extends keyof EventPayloadMapping>(
   ...args: unknown[]
 ): Promise<EventPayloadMapping[Key]> {
   return ipcRenderer.invoke(key, ...args);
+}
+
+export async function getSourceById(
+  id: string
+): Promise<DesktopCapturerSource | undefined> {
+  const sources = await desktopCapturer.getSources({
+    types: ["window", "screen"],
+  });
+  return sources.find((s) => s.id === id);
 }

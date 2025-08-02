@@ -8,7 +8,7 @@ export default function ScreenCapture() {
     try {
       const mediaStream = await navigator.mediaDevices.getDisplayMedia({
         audio: true,
-        video: { width: 1280, height: 720, frameRate: 30 },
+        video: { width: 1280, height: 720, frameRate: 60 },
       });
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;

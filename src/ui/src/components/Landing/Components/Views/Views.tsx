@@ -98,7 +98,12 @@ export default function ViewsList() {
         )}
       </div>
 
-      <AddViews onAdd={handleAddView} />
+      <AddViews
+        onAdd={(source) => {
+          console.log("[Selected Source]", source);
+          handleAddView(source.name);
+        }}
+      />
     </div>
   );
 }
