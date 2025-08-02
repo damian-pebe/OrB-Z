@@ -1,8 +1,18 @@
-import { app, BrowserWindow, desktopCapturer, session } from "electron";
+import {
+  app,
+  BrowserWindow,
+  desktopCapturer,
+  ipcMain,
+  session,
+} from "electron";
 import path from "path";
 import { ipcMainHandle, isDev } from "./util.js";
 import options from "./settings/mainWindowConfig.js";
-import { getScreenView, pollResources } from "./previewsManager.js";
+import {
+  getScreenView,
+  getSourceById,
+  pollResources,
+} from "./previewsManager.js";
 import { createTray } from "./settings/tray.js";
 import { fetchDesktopSources } from "./lib/desktopSources.js";
 
@@ -47,7 +57,10 @@ app.on("ready", () => {
 
   ipcMainHandle("getScreenView", () => getScreenView());
   ipcMainHandle("getDesktopSources", () => fetchDesktopSources());
-
+  ipcMain.handle("getDesktopSourceById", async (_, id: string) => {
+    const source = await getSourceById(id);
+    return source;
+  });
   createTray(mainWindow);
 
   handleCloseEvents(mainWindow);

@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, desktopCapturer } from "electron";
 import { ipcWebContentsSend } from "./util.js";
 
 import { screen } from "electron";
@@ -12,6 +12,15 @@ export function pollResources(mainWindow: BrowserWindow) {
     const values = getScreenView();
     ipcWebContentsSend("screens", mainWindow.webContents, { promise: values });
   }, POLLING_INTERVAL);
+}
+
+export async function getSourceById(
+  id: string
+): Promise<Electron.DesktopCapturerSource | undefined> {
+  const sources = await desktopCapturer.getSources({
+    types: ["window", "screen"],
+  });
+  return sources.find((s) => s.id === id);
 }
 
 export function getScreenView(): getScreen[] {
@@ -46,7 +55,7 @@ export function getScreenView(): getScreen[] {
         "filter application windows",
         "picture in picture",
         "task switching",
-        "orb z" //APP NAME CAUSE WE WONT RE-STREAM IT 
+        "orb z", //APP NAME CAUSE WE WONT RE-STREAM IT
       ];
 
       const titleLower = title.toLowerCase();
