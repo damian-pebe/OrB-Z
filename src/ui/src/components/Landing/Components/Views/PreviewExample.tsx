@@ -1,12 +1,15 @@
 import { useRef, useState } from "react";
+import { useScreenStore } from "../../../../stores";
 
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const sources = useScreenStore((state) => state.screenSources);
+  const sourceId = sources[0]?.id;
 
   const startCapture = async () => {
     try {
-      const testSourceId = "window:263020:1"; // Your temp source ID
+      const testSourceId = sourceId;
 
       const mediaStream = await (navigator.mediaDevices as any).getUserMedia({
         audio: false,
@@ -47,17 +50,21 @@ export default function ScreenCapture() {
         style={{
           padding: "10px 20px",
           marginRight: "10px",
-          background: "linear-gradient(90deg, #4f8cff 0%, #3358ff 100%)",
           color: "#fff",
           border: "none",
           borderRadius: "6px",
           boxShadow: "0 2px 8px rgba(79,140,255,0.15)",
-          cursor: "pointer",
           transition: "transform 0.1s, box-shadow 0.2s",
+          cursor: !sourceId ? "not-allowed" : "pointer",
+          opacity: !sourceId ? 0.6 : 1,
+          background: !sourceId
+            ? "linear-gradient(90deg, #ccc 0%, #aaa 100%)"
+            : "linear-gradient(90deg, #4f8cff 0%, #3358ff 100%)",
         }}
         onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
         onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        disabled={!sourceId}
       >
         Start Capture
       </button>

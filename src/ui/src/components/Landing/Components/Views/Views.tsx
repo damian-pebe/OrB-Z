@@ -1,4 +1,4 @@
-import { LockOpen, Lock, Eye, EyeOff, Trash2 } from "lucide-react";
+import { LockOpen, Lock, Eye, EyeOff, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
 import AddViews from "./AddViews";
@@ -123,16 +123,20 @@ export default function ViewsList() {
         }}
       />
 
-      {/* <button
-          className="absolute top-20 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
-          onClick={() => {
-            useScreenStore.getState().clearScreenSources();
+      <button
+        className="absolute top-20 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
+        onClick={() => {
+          useScreenStore.getState().clearScreenSources();
 
-            setScreens([]);
-          }}
-        >
-          {t("view.clear_all_views") ?? "Clear All Views"}
-        </button> */}
+          setScreens([]);
+          console.log(
+            "Screen sources from views:",
+            useScreenStore.getState().getScreenSources()
+          );
+        }}
+      >
+        <X />
+      </button>
     </div>
   );
 }
