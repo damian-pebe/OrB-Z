@@ -32,6 +32,12 @@ export type DesktopSource = {
   thumbnail: string;
 };
 
+type DesktopCapturerSourceMinimal = {
+  id: string;
+  name: string;
+  thumbnail?: string;
+};
+
 export type getScreen = ScreenItem | WindowItem;
 
 type EventPayloadMapping = {
@@ -50,7 +56,8 @@ contextBridge.exposeInMainWorld("electron", {
   },
   getScreenView: () => ipcInvoke("getScreenView"),
 
-  // Add the missing methods here:
+  getSourceById: (id: string) => ipcRenderer.invoke("getDesktopSourceById", id),
+
   invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args),
 
   previewDesktopSource: (sourceId: string) => {

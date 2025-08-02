@@ -1,56 +1,46 @@
-import { app, BrowserWindow, desktopCapturer, session } from "electron";
+import {
+  app,
+  BrowserWindow,
+  desktopCapturer,
+  ipcMain,
+  session,
+} from "electron";
 import path from "path";
 import { ipcMainHandle, isDev } from "./util.js";
 import options from "./settings/mainWindowConfig.js";
-import { getScreenView, pollResources } from "./previewsManager.js";
+import {
+  getScreenView,
+  getSourceById,
+  pollResources,
+} from "./previewsManager.js";
 import { createTray } from "./settings/tray.js";
 import { fetchDesktopSources } from "./lib/desktopSources.js";
+
+interface ExtendedDisplayMediaRequest
+  extends Electron.DisplayMediaRequestHandlerHandlerRequest {
+  video?: {
+    mandatory?: {
+      chromeMediaSourceId?: string;
+    };
+  };
+}
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow(options);
   // mainWindow.setMenuBarVisibility(false);
   mainWindow.setAutoHideMenuBar(false);
 
-  // session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
-  //   console.log("[Electron] Handling display media request");
-
-  //   // Just return the first screen by default (or you can hardcode test ID if needed)
-  //   desktopCapturer
-  //     .getSources({ types: ["screen", "window"] })
-  //     .then((sources) => {
-  //       console.log(
-  //         "[Electron] Available sources:",
-  //         sources.map((s) => s.id)
-  //       );
-
-  //       if (sources.length > 0) {
-  //         const defaultSource = sources[0];
-
-  //         callback({
-  //           video: defaultSource,
-  //         });
-  //       } else {
-  //         callback({
-  //           video: undefined,
-  //         });
-  //       }
-  //     });
-  // });
-
   session.defaultSession.setDisplayMediaRequestHandler(
-    (_, callback) => {
-      desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
-        if (sources.length > 0) {
-          callback({
-            video: sources[0],
-            audio: "loopback",
-          });
-        } else {
-          callback({ video: undefined, audio: undefined });
-        }
-      });
-    },
-    { useSystemPicker: false }
+    (request: ExtendedDisplayMediaRequest, callback) => {
+      const requestedId = request.video?.mandatory?.chromeMediaSourceId;
+
+      desktopCapturer
+        .getSources({ types: ["screen", "window"] })
+        .then((sources) => {
+          const match = sources.find((s) => s.id === requestedId);
+          callback({ video: match });
+        });
+    }
   );
 
   if (isDev()) {
@@ -63,7 +53,10 @@ app.on("ready", () => {
 
   ipcMainHandle("getScreenView", () => getScreenView());
   ipcMainHandle("getDesktopSources", () => fetchDesktopSources());
-
+  ipcMain.handle("getDesktopSourceById", async (_, id: string) => {
+    const source = await getSourceById(id);
+    return source;
+  });
   createTray(mainWindow);
 
   handleCloseEvents(mainWindow);

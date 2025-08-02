@@ -1,5 +1,5 @@
-import { LockOpen, Lock, Eye, EyeOff, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { LockOpen, Lock, Eye, EyeOff, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
 import AddViews from "./AddViews";
 
@@ -11,12 +11,31 @@ import {
 } from "./lib/util";
 import type { ScreenState } from "./types/types";
 import { useTranslation } from "react-i18next";
+import { useScreenStore } from "../../../../stores/index";
 
 export default function ViewsList() {
   const { t } = useTranslation("common");
-  const initialScreens: ScreenState[] = [];
+  const [screens, setScreens] = useState<ScreenState[]>([]);
 
-  const [screens, setScreens] = useState<ScreenState[]>(initialScreens);
+  const screenSources = useScreenStore((state) => state.screenSources);
+  useEffect(() => {
+    const restoredScreens = screenSources.map((source) => ({
+      id: source.id,
+      name: source.name,
+      locked: false,
+      visible: true,
+      pressedLock: false,
+      pressedVisibility: false,
+      pressedDelete: false,
+    }));
+
+    setScreens(restoredScreens);
+  }, []);
+
+  useEffect(() => {
+    const sources = useScreenStore.getState().getScreenSources();
+    console.log("Screen sources from views:", sources);
+  }, [screens]);
 
   const toggleLock = (index: number) => {
     animatePress(setScreens, index, "pressedLock");
@@ -29,21 +48,30 @@ export default function ViewsList() {
   };
 
   const removeScreen = (index: number) => {
+    const id = screens[index].id;
+
+    useScreenStore.getState().removeScreenSourceById(id);
+
     animatePress(setScreens, index, "pressedDelete");
     removeItemAtIndex(index, [setScreens]);
   };
 
-  const handleAddView = (name: string) => {
+  const handleAddView = (source: { id: string; name: string }) => {
+    useScreenStore.getState().addScreenSource(source);
+
     const newItem: ScreenState = {
-      name,
+      id: source.id,
+      name: source.name,
       locked: false,
       visible: true,
       pressedLock: false,
       pressedVisibility: false,
       pressedDelete: false,
     };
+
     addItem(newItem, [setScreens]);
   };
+
   return (
     <div className="w-full h-full flex justify-between gap-2">
       <div className="h-full min-w-3xl overflow-y-auto">
@@ -98,7 +126,30 @@ export default function ViewsList() {
         )}
       </div>
 
-      <AddViews onAdd={handleAddView} />
+      <AddViews
+        onAdd={(source) => {
+          useScreenStore.getState().addScreenSource({
+            id: source.id,
+            name: source.name,
+          });
+          handleAddView({ id: source.id, name: source.name });
+        }}
+      />
+
+      <button
+        className="absolute top-20 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
+        onClick={() => {
+          useScreenStore.getState().clearScreenSources();
+
+          setScreens([]);
+          console.log(
+            "Screen sources from views:",
+            useScreenStore.getState().getScreenSources()
+          );
+        }}
+      >
+        <X />
+      </button>
     </div>
   );
 }

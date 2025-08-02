@@ -20,7 +20,7 @@ type DesktopSource = {
 };
 
 interface AddViewsProps {
-  onAdd: (id: string) => void;
+  onAdd: (source: DesktopSource) => void;
 }
 
 export default function AddViews({ onAdd }: AddViewsProps) {
@@ -45,7 +45,10 @@ export default function AddViews({ onAdd }: AddViewsProps) {
 
   const handleSave = () => {
     if (selectedSourceId) {
-      onAdd(selectedSourceId);
+      const selected = sources.find((s) => s.id === selectedSourceId);
+      if (selected) {
+        onAdd(selected);
+      }
       setSelectedSourceId(null);
       setIsOpen(false);
     }
