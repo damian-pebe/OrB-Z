@@ -101,6 +101,7 @@ export default function ViewsList() {
       <AddViews
         onAdd={(source) => {
           console.log("[Selected Source]", source);
+          console.log("[ID Selected]", source.id);
           handleAddView(source.name);
         }}
       />

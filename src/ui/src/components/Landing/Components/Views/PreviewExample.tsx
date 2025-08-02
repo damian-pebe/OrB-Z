@@ -6,14 +6,26 @@ export default function ScreenCapture() {
 
   const startCapture = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getDisplayMedia({
-        audio: true,
-        video: { width: 1280, height: 720, frameRate: 60 },
+      const testSourceId = "window:263020:1"; // Your temp source ID
+
+      const mediaStream = await (navigator.mediaDevices as any).getUserMedia({
+        audio: false,
+        video: {
+          mandatory: {
+            chromeMediaSource: "desktop",
+            chromeMediaSourceId: testSourceId,
+            maxWidth: 1920,
+            maxHeight: 1080,
+            maxFrameRate: 120,
+          },
+        },
       });
+
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
         await videoRef.current.play();
       }
+
       setStream(mediaStream);
     } catch (err) {
       console.error("Error during screen capture:", err);
