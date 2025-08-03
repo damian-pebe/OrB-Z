@@ -1,7 +1,6 @@
 import { LockOpen, Lock, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
-import AddViews from "./AddViews";
 
 import {
   animatePress,
@@ -12,6 +11,7 @@ import {
 import type { ScreenState } from "./types/types";
 import { useTranslation } from "react-i18next";
 import { useScreenStore } from "../../../../stores/index";
+import AddViews from "./Components/AddViews";
 
 export default function ViewsList() {
   const { t } = useTranslation("common");

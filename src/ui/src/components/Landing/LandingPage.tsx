@@ -5,7 +5,7 @@ import Options from "./Components/Options";
 import GeneralSettings from "./Components/GeneralSettings";
 // import PreviewScreens from "./Components/Views/Preview";
 import ViewsList from "./Components/Views/Views";
-import ScreenCapture from "./Components/Views/PreviewExample";
+import ScreenCapture from "./Components/Views/Components/PreviewExample";
 
 function Landing() {
   const { t } = useTranslation("common");

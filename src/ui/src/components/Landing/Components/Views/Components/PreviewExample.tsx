@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useScreenStore } from "../../../../stores";
+import { useScreenStore } from "../../../../../stores";
 
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -112,7 +112,7 @@ export default function ScreenCapture() {
         Stop Capture
       </button>
 
-      <video ref={videoRef} width={640} height={360} autoPlay muted />
+      <video ref={videoRef} width={640} height={360} autoPlay />
     </div>
   );
 }
