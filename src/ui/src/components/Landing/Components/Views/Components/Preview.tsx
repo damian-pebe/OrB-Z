@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { ItemOption } from "../../../ui/item";
-import { useViews } from "./hooks/useViews";
+import { ItemOption } from "../../../../ui/item";
+import { useViews } from "../hooks/useViews";
 
 export default function PreviewScreens() {
   const { stats, unsubscribe } = useViews();
