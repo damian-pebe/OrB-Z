@@ -1,7 +1,6 @@
 import { LockOpen, Lock, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
-
 import {
   animatePress,
   toggleStateAt,
@@ -17,47 +16,41 @@ export default function ViewsList() {
   const { t } = useTranslation("common");
   const [screens, setScreens] = useState<ScreenState[]>([]);
 
-  const screenSources = useScreenStore((state) => state.screenSources);
+  const sources = useScreenStore((state) => state.screenSources);
+  const toggleVisible = useScreenStore((state) => state.setScreenVisibleById);
+
   useEffect(() => {
-    const restoredScreens = screenSources.map((source) => ({
+    const restoredScreens = sources.map((source) => ({
       id: source.id,
       name: source.name,
       locked: false,
-      visible: true,
+      visible: source.visible ?? true,
       pressedLock: false,
-      pressedVisibility: false,
       pressedDelete: false,
+      pressedVisibility: false,
     }));
 
     setScreens(restoredScreens);
-  }, []);
-
-  useEffect(() => {
-    const sources = useScreenStore.getState().getScreenSources();
-    console.log("Screen sources from views:", sources);
-  }, [screens]);
+  }, [sources]);
 
   const toggleLock = (index: number) => {
     animatePress(setScreens, index, "pressedLock");
     toggleStateAt(setScreens, index, "locked");
   };
 
-  const toggleVisibility = (index: number) => {
-    animatePress(setScreens, index, "pressedVisibility");
-    toggleStateAt(setScreens, index, "visible");
-  };
-
   const removeScreen = (index: number) => {
     const id = screens[index].id;
-
     useScreenStore.getState().removeScreenSourceById(id);
-
     animatePress(setScreens, index, "pressedDelete");
     removeItemAtIndex(index, [setScreens]);
   };
 
   const handleAddView = (source: { id: string; name: string }) => {
-    useScreenStore.getState().addScreenSource(source);
+    useScreenStore.getState().addScreenSource({
+      id: source.id,
+      name: source.name,
+      visible: true,
+    });
 
     const newItem: ScreenState = {
       id: source.id,
@@ -65,8 +58,8 @@ export default function ViewsList() {
       locked: false,
       visible: true,
       pressedLock: false,
-      pressedVisibility: false,
       pressedDelete: false,
+      pressedVisibility: false,
     };
 
     addItem(newItem, [setScreens]);
@@ -86,18 +79,24 @@ export default function ViewsList() {
 
             return (
               <div
-                key={index}
+                key={screen.id}
                 className="flex items-center gap-2 text-xs text-white"
               >
                 <Checkbox
-                  id={`item-${index}`}
-                  className="transition-all duration-700"
-                  checked={screen.visible}
-                  onCheckedChange={() => toggleVisibility(index)}
+                  checked={screen.visible || false}
+                  onCheckedChange={(checked) => {
+                    const isVisible = Boolean(checked);
+                    toggleVisible(screen.id, isVisible);
+                    console.log(
+                      `[${screen.id}] Visibility changed to: ${isVisible}`
+                    );
+                  }}
                 />
+
                 <div className="flex mt-1 w-15 font-nunito truncate overflow-hidden whitespace-nowrap">
                   {screen.name}
                 </div>
+
                 <button
                   onClick={() => removeScreen(index)}
                   className={`text-white transition-transform duration-150 hover:cursor-pointer ${delPressed}`}
@@ -105,13 +104,7 @@ export default function ViewsList() {
                 >
                   <Trash2 size={16} />
                 </button>
-                {/* <button
-                    onClick={() => toggleVisibility(index)}
-                  className={`text-white transition-transform duration-150 hover:cursor-pointer ${visPressed}`}
-                  aria-label={screen.visible ? "Hide" : "Show"}
-                >
-                  {screen.visible ? <Eye size={16} /> : <EyeOff size={16} />}
-                </button> */}
+
                 <button
                   onClick={() => toggleLock(index)}
                   className={`text-white transition-transform duration-150 hover:cursor-pointer mr-5 ${lockPressed}`}
@@ -130,6 +123,7 @@ export default function ViewsList() {
           useScreenStore.getState().addScreenSource({
             id: source.id,
             name: source.name,
+            visible: true,
           });
           handleAddView({ id: source.id, name: source.name });
         }}
@@ -139,12 +133,7 @@ export default function ViewsList() {
         className="absolute bottom-2 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
         onClick={() => {
           useScreenStore.getState().clearScreenSources();
-
           setScreens([]);
-          console.log(
-            "Screen sources from views:",
-            useScreenStore.getState().getScreenSources()
-          );
         }}
       >
         <X />

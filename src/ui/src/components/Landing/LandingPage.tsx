@@ -14,8 +14,8 @@ function Landing() {
     <div className="w-[100vw] h-full flex flex-col items-center justify-between">
       <div className="w-full h-[65vh] flex items-center justify-center px-5 gap-5 font-righteous">
         <GlassContainer className="h-full w-[70vw] flex flex-col items-center justify-center">
-          <h1 className="text-4xl text-white">{t("welcome")}</h1>
-          here ill set the main preview
+          {/* <h1 className="text-4xl text-white">{t("welcome")}</h1> */}
+          {/* here ill set the main preview */}
           {/* <PreviewScreens /> */}
           <ScreenCapture />
         </GlassContainer>

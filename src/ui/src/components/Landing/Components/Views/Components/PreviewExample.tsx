@@ -4,16 +4,13 @@ import { useScreenStore } from "../../../../../stores";
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const sources = useScreenStore((state) => state.screenSources);
   const [recordingSourceId, setRecordingSourceId] = useState<string | null>(
     null
   );
+  const sources = useScreenStore((state) => state.screenSources);
+  const visibleSource = sources.find((s) => s.visible);
 
-  const sourceId = sources[0]?.id;
-
-  const startCapture = async () => {
-    if (!sourceId) return;
-
+  const startCapture = async (sourceId: string) => {
     try {
       const mediaStream = await (navigator.mediaDevices as any).getUserMedia({
         audio: false,
@@ -50,10 +47,18 @@ export default function ScreenCapture() {
   };
 
   useEffect(() => {
-    if (!recordingSourceId) return;
+    if (visibleSource?.id && visibleSource.id !== recordingSourceId) {
+      startCapture(visibleSource.id);
+    }
 
+    if (!visibleSource && recordingSourceId) {
+      stopCapture();
+    }
+  }, [visibleSource?.id, recordingSourceId]);
+
+  useEffect(() => {
     const stillExists = sources.some((s) => s.id === recordingSourceId);
-    if (!stillExists) {
+    if (recordingSourceId && !stillExists) {
       console.warn("Recording source was removed. Stopping capture...");
       stopCapture();
     }
@@ -61,57 +66,6 @@ export default function ScreenCapture() {
 
   return (
     <div>
-      <button
-        onClick={startCapture}
-        style={{
-          padding: "10px 20px",
-          marginRight: "10px",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          boxShadow: "0 2px 8px rgba(79,140,255,0.15)",
-          transition: "transform 0.1s, box-shadow 0.2s",
-          cursor: !sourceId ? "not-allowed" : "pointer",
-          opacity: !sourceId ? 0.6 : 1,
-          background: !sourceId
-            ? "linear-gradient(90deg, #ccc 0%, #aaa 100%)"
-            : "linear-gradient(90deg, #4f8cff 0%, #3358ff 100%)",
-        }}
-        onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
-        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-        disabled={!sourceId}
-      >
-        Start Capture
-      </button>
-
-      <button
-        onClick={stopCapture}
-        disabled={!stream}
-        style={{
-          padding: "10px 20px",
-          background: !stream
-            ? "linear-gradient(90deg, #ccc 0%, #aaa 100%)"
-            : "linear-gradient(90deg, #ff4f4f 0%, #ff3358 100%)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          boxShadow: !stream
-            ? "0 2px 8px rgba(200,200,200,0.15)"
-            : "0 2px 8px rgba(255,79,79,0.15)",
-          cursor: !stream ? "not-allowed" : "pointer",
-          opacity: !stream ? 0.6 : 1,
-          transition: "transform 0.1s, box-shadow 0.2s, opacity 0.2s",
-        }}
-        onMouseDown={(e) => {
-          if (stream) e.currentTarget.style.transform = "scale(0.96)";
-        }}
-        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-      >
-        Stop Capture
-      </button>
-
       <video ref={videoRef} width={640} height={360} autoPlay />
     </div>
   );

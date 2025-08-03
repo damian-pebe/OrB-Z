@@ -4,14 +4,16 @@ import { persist } from "zustand/middleware";
 type ScreenSource = {
   id: string;
   name: string;
+  visible?: boolean;
 };
-
 type ScreenStore = {
   screenSources: ScreenSource[];
   addScreenSource: (source: ScreenSource) => void;
   clearScreenSources: () => void;
   getScreenSources: () => ScreenSource[];
   removeScreenSourceById: (id: string) => void;
+  setScreenVisibleById: (id: string, visible: boolean) => void;
+  getVisibleScreenSources: () => ScreenSource[];
 };
 
 export const useScreenStore = create<ScreenStore>()(
@@ -30,6 +32,18 @@ export const useScreenStore = create<ScreenStore>()(
       removeScreenSourceById: (id) => {
         const current = get().screenSources;
         set({ screenSources: current.filter((s) => s.id !== id) });
+      },
+      setScreenVisibleById: (id: string, visible: boolean) => {
+        set((state) => {
+          const updated = state.screenSources.map((s) =>
+            s.id === id ? { ...s, visible } : s
+          );
+          return { screenSources: updated };
+        });
+      },
+
+      getVisibleScreenSources: () => {
+        return get().screenSources.filter((s) => s.visible);
       },
     }),
     {
