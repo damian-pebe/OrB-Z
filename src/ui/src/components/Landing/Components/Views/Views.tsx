@@ -1,4 +1,4 @@
-import { LockOpen, Lock, Eye, EyeOff, Trash2, X } from "lucide-react";
+import { LockOpen, Lock, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Checkbox } from "../../../../../../components/ui/checkbox";
 import AddViews from "./AddViews";
@@ -82,9 +82,6 @@ export default function ViewsList() {
         ) : (
           screens.map((screen, index) => {
             const lockPressed = screen.pressedLock ? "-translate-y-0.5" : "";
-            const visPressed = screen.pressedVisibility
-              ? "-translate-y-0.5"
-              : "";
             const delPressed = screen.pressedDelete ? "-translate-y-0.5" : "";
 
             return (
@@ -95,6 +92,8 @@ export default function ViewsList() {
                 <Checkbox
                   id={`item-${index}`}
                   className="transition-all duration-700"
+                  checked={screen.visible}
+                  onCheckedChange={() => toggleVisibility(index)}
                 />
                 <div className="flex mt-1 w-15 font-nunito truncate overflow-hidden whitespace-nowrap">
                   {screen.name}
@@ -106,13 +105,13 @@ export default function ViewsList() {
                 >
                   <Trash2 size={16} />
                 </button>
-                <button
-                  onClick={() => toggleVisibility(index)}
+                {/* <button
+                    onClick={() => toggleVisibility(index)}
                   className={`text-white transition-transform duration-150 hover:cursor-pointer ${visPressed}`}
                   aria-label={screen.visible ? "Hide" : "Show"}
                 >
                   {screen.visible ? <Eye size={16} /> : <EyeOff size={16} />}
-                </button>
+                </button> */}
                 <button
                   onClick={() => toggleLock(index)}
                   className={`text-white transition-transform duration-150 hover:cursor-pointer mr-5 ${lockPressed}`}
@@ -137,7 +136,7 @@ export default function ViewsList() {
       />
 
       <button
-        className="absolute top-20 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5"
+        className="absolute bottom-2 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
         onClick={() => {
           useScreenStore.getState().clearScreenSources();
 
@@ -149,6 +148,7 @@ export default function ViewsList() {
         }}
       >
         <X />
+        Clear
       </button>
     </div>
   );

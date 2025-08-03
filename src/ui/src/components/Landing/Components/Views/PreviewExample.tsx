@@ -1,22 +1,26 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useScreenStore } from "../../../../stores";
 
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const sources = useScreenStore((state) => state.screenSources);
+  const [recordingSourceId, setRecordingSourceId] = useState<string | null>(
+    null
+  );
+
   const sourceId = sources[0]?.id;
 
   const startCapture = async () => {
-    try {
-      const testSourceId = sourceId;
+    if (!sourceId) return;
 
+    try {
       const mediaStream = await (navigator.mediaDevices as any).getUserMedia({
         audio: false,
         video: {
           mandatory: {
             chromeMediaSource: "desktop",
-            chromeMediaSourceId: testSourceId,
+            chromeMediaSourceId: sourceId,
             maxWidth: 1920,
             maxHeight: 1080,
             maxFrameRate: 240,
@@ -30,6 +34,7 @@ export default function ScreenCapture() {
       }
 
       setStream(mediaStream);
+      setRecordingSourceId(sourceId);
     } catch (err) {
       console.error("Error during screen capture:", err);
     }
@@ -40,8 +45,19 @@ export default function ScreenCapture() {
       stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
       if (videoRef.current) videoRef.current.srcObject = null;
       setStream(null);
+      setRecordingSourceId(null);
     }
   };
+
+  useEffect(() => {
+    if (!recordingSourceId) return;
+
+    const stillExists = sources.some((s) => s.id === recordingSourceId);
+    if (!stillExists) {
+      console.warn("Recording source was removed. Stopping capture...");
+      stopCapture();
+    }
+  }, [sources, recordingSourceId]);
 
   return (
     <div>
@@ -68,6 +84,7 @@ export default function ScreenCapture() {
       >
         Start Capture
       </button>
+
       <button
         onClick={stopCapture}
         disabled={!stream}
@@ -94,6 +111,7 @@ export default function ScreenCapture() {
       >
         Stop Capture
       </button>
+
       <video ref={videoRef} width={640} height={360} autoPlay muted />
     </div>
   );
