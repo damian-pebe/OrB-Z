@@ -18,6 +18,7 @@ export default function ViewsList() {
 
   const sources = useScreenStore((state) => state.screenSources);
   const toggleVisible = useScreenStore((state) => state.setScreenVisibleById);
+  const setAllVisible = useScreenStore((state) => state.setAllScreensVisible);
 
   useEffect(() => {
     const restoredScreens = sources.map((source) => ({
@@ -43,7 +44,7 @@ export default function ViewsList() {
 
     // First set visibility to false to trigger stop recording in PreviewExample
     useScreenStore.getState().setScreenVisibleById(id, false);
-    
+
     // Wait a moment to ensure the recording stops before removing the source
     setTimeout(() => {
       useScreenStore.getState().removeScreenSourceById(id);
@@ -73,6 +74,36 @@ export default function ViewsList() {
     addItem(newItem, [setScreens]);
   };
 
+  const hideAllViews = () => {
+    console.log("Hiding all views - starting");
+
+    // Use the batch operation to set all to invisible
+    setAllVisible(false);
+
+    // Update local state immediately for UI feedback
+    setScreens((prev) => {
+      const updated = prev.map((s) => ({ ...s, visible: false }));
+      console.log("Local state updated:", updated);
+      return updated;
+    });
+
+    console.log("All views should now be hidden");
+  };
+
+  const clearAllViews = () => {
+    console.log("Clearing all views - starting");
+
+    // First hide all to stop recordings
+    setAllVisible(false);
+
+    // Wait a moment to ensure recordings stop before clearing
+    setTimeout(() => {
+      useScreenStore.getState().clearScreenSources();
+      setScreens([]);
+      console.log("All views cleared from storage");
+    }, 200);
+  };
+
   return (
     <div className="w-full h-full flex justify-between gap-2">
       <div className="h-full min-w-3xl overflow-y-auto">
@@ -94,7 +125,17 @@ export default function ViewsList() {
                   checked={screen.visible || false}
                   onCheckedChange={(checked) => {
                     const isVisible = Boolean(checked);
+
+                    // Update the store
                     toggleVisible(screen.id, isVisible);
+
+                    // Update local state immediately for immediate UI feedback
+                    setScreens((prev) =>
+                      prev.map((s) =>
+                        s.id === screen.id ? { ...s, visible: isVisible } : s
+                      )
+                    );
+
                     console.log(
                       `[${screen.id}] Visibility changed to: ${isVisible}`
                     );
@@ -138,11 +179,16 @@ export default function ViewsList() {
       />
 
       <button
+        className="absolute bottom-2 right-12 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
+        onClick={hideAllViews}
+      >
+        <X />
+        Hide All
+      </button>
+
+      <button
         className="absolute bottom-2 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
-        onClick={() => {
-          useScreenStore.getState().clearScreenSources();
-          setScreens([]);
-        }}
+        onClick={clearAllViews}
       >
         <X />
         Clear
