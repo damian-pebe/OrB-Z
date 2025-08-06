@@ -40,7 +40,15 @@ export default function ViewsList() {
 
   const removeScreen = (index: number) => {
     const id = screens[index].id;
-    useScreenStore.getState().removeScreenSourceById(id);
+
+    // First set visibility to false to trigger stop recording in PreviewExample
+    useScreenStore.getState().setScreenVisibleById(id, false);
+    
+    // Wait a moment to ensure the recording stops before removing the source
+    setTimeout(() => {
+      useScreenStore.getState().removeScreenSourceById(id);
+    }, 100);
+
     animatePress(setScreens, index, "pressedDelete");
     removeItemAtIndex(index, [setScreens]);
   };

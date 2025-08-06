@@ -14,6 +14,7 @@ type ScreenStore = {
   removeScreenSourceById: (id: string) => void;
   setScreenVisibleById: (id: string, visible: boolean) => void;
   getVisibleScreenSources: () => ScreenSource[];
+  updateScreenSource: (id: string, updates: Partial<ScreenSource>) => void;
 };
 
 export const useScreenStore = create<ScreenStore>()(
@@ -45,6 +46,12 @@ export const useScreenStore = create<ScreenStore>()(
       getVisibleScreenSources: () => {
         return get().screenSources.filter((s) => s.visible);
       },
+      updateScreenSource: (id, updates) =>
+        set((state) => ({
+          screenSources: state.screenSources.map((s) =>
+            s.id === id ? { ...s, ...updates } : s
+          ),
+        })),
     }),
     {
       name: "screen-sources-storage",

@@ -11,6 +11,9 @@ export default function ScreenCapture() {
   const visibleSource = sources.find((s) => s.visible);
 
   const startCapture = async (sourceId: string) => {
+    stopCapture();
+    await new Promise((res) => setTimeout(res, 200));
+
     try {
       const mediaStream = await (navigator.mediaDevices as any).getUserMedia({
         audio: false,
@@ -24,6 +27,14 @@ export default function ScreenCapture() {
           },
         },
       });
+
+      const videoTracks = mediaStream.getVideoTracks();
+      if (videoTracks.length > 0) {
+        videoTracks[0].onended = () => {
+          console.warn("Stream ended unexpectedly. Stopping.");
+          stopCapture();
+        };
+      }
 
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
@@ -40,10 +51,17 @@ export default function ScreenCapture() {
   const stopCapture = () => {
     if (stream) {
       stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-      if (videoRef.current) videoRef.current.srcObject = null;
-      setStream(null);
-      setRecordingSourceId(null);
     }
+
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.srcObject = null;
+      videoRef.current.removeAttribute("src");
+      videoRef.current.load();
+    }
+
+    setStream(null);
+    setRecordingSourceId(null);
   };
 
   useEffect(() => {
@@ -63,6 +81,13 @@ export default function ScreenCapture() {
       stopCapture();
     }
   }, [sources, recordingSourceId]);
+
+  // Additional cleanup when the component unmounts
+  useEffect(() => {
+    return () => {
+      stopCapture();
+    };
+  }, []);
 
   return (
     <div>
