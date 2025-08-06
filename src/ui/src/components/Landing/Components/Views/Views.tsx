@@ -42,10 +42,8 @@ export default function ViewsList() {
   const removeScreen = (index: number) => {
     const id = screens[index].id;
 
-    // First set visibility to false to trigger stop recording in PreviewExample
     useScreenStore.getState().setScreenVisibleById(id, false);
 
-    // Wait a moment to ensure the recording stops before removing the source
     setTimeout(() => {
       useScreenStore.getState().removeScreenSourceById(id);
     }, 100);
@@ -75,32 +73,44 @@ export default function ViewsList() {
   };
 
   const hideAllViews = () => {
-    console.log("Hiding all views - starting");
-
-    // Use the batch operation to set all to invisible
     setAllVisible(false);
 
-    // Update local state immediately for UI feedback
-    setScreens((prev) => {
-      const updated = prev.map((s) => ({ ...s, visible: false }));
-      console.log("Local state updated:", updated);
-      return updated;
-    });
+    setTimeout(() => {
+      const updatedSources = useScreenStore.getState().screenSources;
 
-    console.log("All views should now be hidden");
+      setScreens((prev) => {
+        const updated = prev.map((s) => ({ ...s, visible: false }));
+        return updated;
+      });
+
+      const stillVisible = updatedSources.filter((s) => s.visible);
+      if (stillVisible.length > 0) {
+        stillVisible.forEach((source) => {
+          useScreenStore.getState().setScreenVisibleById(source.id, false);
+        });
+      }
+    }, 50);
   };
 
   const clearAllViews = () => {
-    console.log("Clearing all views - starting");
-
-    // First hide all to stop recordings
     setAllVisible(false);
 
-    // Wait a moment to ensure recordings stop before clearing
     setTimeout(() => {
       useScreenStore.getState().clearScreenSources();
-      setScreens([]);
-      console.log("All views cleared from storage");
+
+      try {
+        localStorage.removeItem("screen-sources-storage");
+      } catch (e) {}
+
+      setTimeout(() => {
+        const finalSources = useScreenStore.getState().screenSources;
+
+        setScreens([]);
+
+        if (finalSources.length > 0) {
+          useScreenStore.setState({ screenSources: [] });
+        }
+      }, 50);
     }, 200);
   };
 
@@ -134,10 +144,6 @@ export default function ViewsList() {
                       prev.map((s) =>
                         s.id === screen.id ? { ...s, visible: isVisible } : s
                       )
-                    );
-
-                    console.log(
-                      `[${screen.id}] Visibility changed to: ${isVisible}`
                     );
                   }}
                 />

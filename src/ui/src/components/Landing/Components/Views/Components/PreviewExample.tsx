@@ -105,7 +105,6 @@ export default function ScreenCapture() {
     }
   }, [sources, recordingSourceId]);
 
-  // Additional effect to handle visibility changes for the current recording source
   useEffect(() => {
     console.log("Checking visibility for current recording source...");
     if (recordingSourceId) {
@@ -120,7 +119,6 @@ export default function ScreenCapture() {
     }
   }, [sources, recordingSourceId]);
 
-  // Additional cleanup when the component unmounts
   useEffect(() => {
     return () => {
       stopCapture();

@@ -29,7 +29,9 @@ export const useScreenStore = create<ScreenStore>()(
           set({ screenSources: [...current, source] });
         }
       },
-      clearScreenSources: () => set({ screenSources: [] }),
+      clearScreenSources: () => {
+        set({ screenSources: [] });
+      },
       getScreenSources: () => get().screenSources,
       removeScreenSourceById: (id) => {
         const current = get().screenSources;
@@ -43,7 +45,6 @@ export const useScreenStore = create<ScreenStore>()(
           return { screenSources: updated };
         });
       },
-
       setAllScreensVisible: (visible: boolean) => {
         set((state) => {
           const updated = state.screenSources.map((s) => ({
@@ -53,7 +54,6 @@ export const useScreenStore = create<ScreenStore>()(
           return { screenSources: updated };
         });
       },
-
       getVisibleScreenSources: () => {
         return get().screenSources.filter((s) => s.visible);
       },
