@@ -18,6 +18,7 @@ export default function ViewsList() {
 
   const sources = useScreenStore((state) => state.screenSources);
   const toggleVisible = useScreenStore((state) => state.setScreenVisibleById);
+  const setAllVisible = useScreenStore((state) => state.setAllScreensVisible);
 
   useEffect(() => {
     const restoredScreens = sources.map((source) => ({
@@ -40,7 +41,13 @@ export default function ViewsList() {
 
   const removeScreen = (index: number) => {
     const id = screens[index].id;
-    useScreenStore.getState().removeScreenSourceById(id);
+
+    useScreenStore.getState().setScreenVisibleById(id, false);
+
+    setTimeout(() => {
+      useScreenStore.getState().removeScreenSourceById(id);
+    }, 100);
+
     animatePress(setScreens, index, "pressedDelete");
     removeItemAtIndex(index, [setScreens]);
   };
@@ -65,6 +72,48 @@ export default function ViewsList() {
     addItem(newItem, [setScreens]);
   };
 
+  const hideAllViews = () => {
+    setAllVisible(false);
+
+    setTimeout(() => {
+      const updatedSources = useScreenStore.getState().screenSources;
+
+      setScreens((prev) => {
+        const updated = prev.map((s) => ({ ...s, visible: false }));
+        return updated;
+      });
+
+      const stillVisible = updatedSources.filter((s) => s.visible);
+      if (stillVisible.length > 0) {
+        stillVisible.forEach((source) => {
+          useScreenStore.getState().setScreenVisibleById(source.id, false);
+        });
+      }
+    }, 50);
+  };
+
+  const clearAllViews = () => {
+    setAllVisible(false);
+
+    setTimeout(() => {
+      useScreenStore.getState().clearScreenSources();
+
+      try {
+        localStorage.removeItem("screen-sources-storage");
+      } catch (e) {}
+
+      setTimeout(() => {
+        const finalSources = useScreenStore.getState().screenSources;
+
+        setScreens([]);
+
+        if (finalSources.length > 0) {
+          useScreenStore.setState({ screenSources: [] });
+        }
+      }, 50);
+    }, 200);
+  };
+
   return (
     <div className="w-full h-full flex justify-between gap-2">
       <div className="h-full min-w-3xl overflow-y-auto">
@@ -86,9 +135,15 @@ export default function ViewsList() {
                   checked={screen.visible || false}
                   onCheckedChange={(checked) => {
                     const isVisible = Boolean(checked);
+
+                    // Update the store
                     toggleVisible(screen.id, isVisible);
-                    console.log(
-                      `[${screen.id}] Visibility changed to: ${isVisible}`
+
+                    // Update local state immediately for immediate UI feedback
+                    setScreens((prev) =>
+                      prev.map((s) =>
+                        s.id === screen.id ? { ...s, visible: isVisible } : s
+                      )
                     );
                   }}
                 />
@@ -130,11 +185,16 @@ export default function ViewsList() {
       />
 
       <button
+        className="absolute bottom-2 right-12 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
+        onClick={hideAllViews}
+      >
+        <X />
+        Hide All
+      </button>
+
+      <button
         className="absolute bottom-2 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
-        onClick={() => {
-          useScreenStore.getState().clearScreenSources();
-          setScreens([]);
-        }}
+        onClick={clearAllViews}
       >
         <X />
         Clear

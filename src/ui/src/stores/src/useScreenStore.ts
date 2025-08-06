@@ -13,7 +13,9 @@ type ScreenStore = {
   getScreenSources: () => ScreenSource[];
   removeScreenSourceById: (id: string) => void;
   setScreenVisibleById: (id: string, visible: boolean) => void;
+  setAllScreensVisible: (visible: boolean) => void;
   getVisibleScreenSources: () => ScreenSource[];
+  updateScreenSource: (id: string, updates: Partial<ScreenSource>) => void;
 };
 
 export const useScreenStore = create<ScreenStore>()(
@@ -27,7 +29,9 @@ export const useScreenStore = create<ScreenStore>()(
           set({ screenSources: [...current, source] });
         }
       },
-      clearScreenSources: () => set({ screenSources: [] }),
+      clearScreenSources: () => {
+        set({ screenSources: [] });
+      },
       getScreenSources: () => get().screenSources,
       removeScreenSourceById: (id) => {
         const current = get().screenSources;
@@ -41,10 +45,24 @@ export const useScreenStore = create<ScreenStore>()(
           return { screenSources: updated };
         });
       },
-
+      setAllScreensVisible: (visible: boolean) => {
+        set((state) => {
+          const updated = state.screenSources.map((s) => ({
+            ...s,
+            visible,
+          }));
+          return { screenSources: updated };
+        });
+      },
       getVisibleScreenSources: () => {
         return get().screenSources.filter((s) => s.visible);
       },
+      updateScreenSource: (id, updates) =>
+        set((state) => ({
+          screenSources: state.screenSources.map((s) =>
+            s.id === id ? { ...s, ...updates } : s
+          ),
+        })),
     }),
     {
       name: "screen-sources-storage",
