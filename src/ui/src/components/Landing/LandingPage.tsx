@@ -34,10 +34,6 @@ function Landing() {
         >
           <ViewsList />
         </GlassContainer>
-
-        <GlassContainer className="h-full w-[60vw]">
-          <GeneralSettings />
-        </GlassContainer>
       </div>
     </div>
   );
