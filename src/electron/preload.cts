@@ -49,6 +49,8 @@ type EventPayloadMapping = {
 const { contextBridge, ipcRenderer } = electron;
 
 contextBridge.exposeInMainWorld("electron", {
+  minimize: () => ipcRenderer.invoke("window:minimize"),
+  close: () => ipcRenderer.invoke("window:close"),
   subscribeViewer: (callback) => {
     return ipcOn("screens", (stats) => {
       callback(stats);

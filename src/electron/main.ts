@@ -60,6 +60,18 @@ app.on("ready", () => {
   createTray(mainWindow);
 
   handleCloseEvents(mainWindow);
+
+  ipcMain.handle("window:minimize", () => {
+    if (!mainWindow.isDestroyed()) {
+      mainWindow.minimize();
+    }
+  });
+
+  ipcMain.handle("window:close", () => {
+    if (!mainWindow.isDestroyed()) {
+      mainWindow.close();
+    }
+  });
 });
 
 function handleCloseEvents(mainWindow: BrowserWindow) {

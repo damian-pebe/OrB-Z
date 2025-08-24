@@ -59,6 +59,9 @@ declare global {
 
       invoke: <T = unknown>(channel: string, ...args: unknown[]) => Promise<T>;
 
+      minimize: () => void;
+      close: () => void;
+
       previewDesktopSource: (sourceId: string) => void;
 
       getSourceById: (

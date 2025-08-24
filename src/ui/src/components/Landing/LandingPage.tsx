@@ -10,6 +10,7 @@ function Landing() {
   const { t } = useTranslation("common");
 
   return (
+    // gotta implement the new layout
     <div className="w-full h-[90vh] flex items-center justify-between">
       <div className="w-[70vw] h-full flex flex-col items-center justify-center px-5 gap-5 font-righteous">
         <GlassContainer className="h-full w-full flex flex-col items-center justify-center">

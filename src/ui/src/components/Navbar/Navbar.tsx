@@ -5,15 +5,15 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full relative flex justify-between items-center px-5">
+    <div className="w-full relative flex justify-between items-center px-5 select-none drag">
       <div className="w-[30vw] flex justify-center items-center gap-5">
         <ItemOption
-          className="bg-white/10 px-3"
+          className="bg-white/10 px-3 no-drag"
           label="Dashboard"
           onClick={() => navigate("/dashboard")}
         />
         <ItemOption
-          className="bg-white/10 px-3"
+          className="bg-white/10 px-3 no-drag"
           label="Loading"
           onClick={() => navigate("/loading")}
         />
@@ -21,14 +21,22 @@ export default function Navbar() {
 
       <div
         onClick={() => navigate("/")}
-        className="absolute left-1/2 -translate-x-1/2 font-poiret text-3xl hover:tracking-widest hover:-translate-y-0.5 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 text-center text-md my-3"
+        className="absolute left-1/2 -translate-x-1/2 font-poiret text-3xl hover:tracking-widest hover:-translate-y-0.5 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 text-center text-md my-3 no-drag"
       >
         OrB Z
       </div>
 
       <div className="w-[30vw] flex justify-center items-center gap-5">
-        <ItemOption className="bg-white/10 px-2" label="-" onClick={() => {}} />
-        <ItemOption className="bg-white/10 px-2" label="x" onClick={() => {}} />
+        <ItemOption
+          className="bg-white/10 px-2 no-drag"
+          label="-"
+          onClick={() => window.electron.minimize()}
+        />
+        <ItemOption
+          className="bg-white/10 px-2 no-drag"
+          label="x"
+          onClick={() => window.electron.close()}
+        />
       </div>
     </div>
   );
