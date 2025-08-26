@@ -14,6 +14,7 @@ export default function Navbar() {
           OrB Z
         </div>
       </div>
+      {/* gotta fix these buttons, doesnt work */}
 
       <div className="flex items-center gap-5 no-drag">
         <ItemOption
