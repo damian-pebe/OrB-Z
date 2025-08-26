@@ -6,27 +6,16 @@ export default function Navbar() {
 
   return (
     <div className="w-full relative flex justify-between items-center px-5 select-none drag">
-      <div className="w-[30vw] flex justify-center items-center gap-5">
-        <ItemOption
-          className="bg-white/10 px-3 no-drag"
-          label="Dashboard"
-          onClick={() => navigate("/dashboard")}
-        />
-        <ItemOption
-          className="bg-white/10 px-3 no-drag"
-          label="Loading"
-          onClick={() => navigate("/loading")}
-        />
+      <div className="flex items-center gap-3 no-drag">
+        <div
+          onClick={() => navigate("/")}
+          className="font-poiret text-3xl hover:tracking-widest hover:-translate-y-0.5 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 text-md my-3"
+        >
+          OrB Z
+        </div>
       </div>
 
-      <div
-        onClick={() => navigate("/")}
-        className="absolute left-1/2 -translate-x-1/2 font-poiret text-3xl hover:tracking-widest hover:-translate-y-0.5 transition-all duration-700 hover:cursor-pointer hover:shadow-black/30 rounded-xl p-1 text-center text-md my-3 no-drag"
-      >
-        OrB Z
-      </div>
-
-      <div className="w-[30vw] flex justify-center items-center gap-5">
+      <div className="flex items-center gap-5 no-drag">
         <ItemOption
           className="bg-white/10 px-2 no-drag"
           label="-"

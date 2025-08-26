@@ -69,29 +69,24 @@ app.on("ready", () => {
 
   ipcMain.handle("window:close", () => {
     if (!mainWindow.isDestroyed()) {
+      (mainWindow as any).__allowClose = true;
       mainWindow.close();
     }
   });
 });
 
 function handleCloseEvents(mainWindow: BrowserWindow) {
-  let willClose = false;
-  console.log(willClose);
   mainWindow.on("close", (e) => {
-    e.preventDefault();
-    mainWindow.hide();
-    if (app.dock) {
-      app.dock.hide();
+    if (!(mainWindow as any).__allowClose) {
+      e.preventDefault();
+      mainWindow.hide();
+      if ((app as any).dock) {
+        (app as any).dock.hide();
+      }
     }
   });
 
   app.on("before-quit", () => {
-    willClose = true;
-    console.log("App is quitting, closing main window.");
-  });
-
-  mainWindow.on("show", () => {
-    willClose = false;
-    console.log("Main window is shown.");
+    (mainWindow as any).__allowClose = true;
   });
 }
