@@ -126,8 +126,8 @@ export default function ScreenCapture() {
   }, []);
 
   return (
-    <div>
-      <video ref={videoRef} width={640} height={360} autoPlay />
+    <div className="w-full h-full rounded-xl overflow-hidden">
+      <video ref={videoRef} className="w-full h-full object-cover" autoPlay />
     </div>
   );
 }

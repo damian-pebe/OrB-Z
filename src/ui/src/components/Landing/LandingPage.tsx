@@ -10,10 +10,12 @@ function Landing() {
   const { t } = useTranslation("common");
 
   return (
-    // gotta implement the new layout
-    <div className="w-full h-[90vh] flex items-center justify-between">
-      <div className="w-[70vw] h-full flex flex-col items-center justify-center px-5 gap-5 font-righteous">
-        <GlassContainer className="h-full w-full flex flex-col items-center justify-center">
+    <div className="w-full h-full flex items-center justify-between">
+      <div className="flex-1 min-w-0 h-full flex flex-col items-center justify-center m-5 gap-y-5 font-righteous">
+        <GlassContainer
+          className="h-full w-full flex flex-col items-center justify-center"
+          padding="p-0"
+        >
           <ScreenCapture />
         </GlassContainer>
         <GlassContainer
@@ -24,8 +26,8 @@ function Landing() {
         </GlassContainer>
       </div>
 
-      <div className="w-full h-full flex items-center justify-center p-5 gap-5 font-righteous">
-        <GlassContainer className="h-full w-[20vw] flex flex-col items-center justify-center">
+      <div className="flex-none h-full flex items-center justify-center m-5 font-righteous">
+        <GlassContainer className="h-full w-auto flex flex-col items-center justify-center">
           <TitleWrapper label={t("title.options")}>
             <Options />
           </TitleWrapper>

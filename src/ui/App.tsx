@@ -9,18 +9,20 @@ const Navbar = lazy(() => import("./src/components/Navbar/Navbar"));
 function App() {
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center overflow-hidden text-white"
+      className="h-screen w-full bg-cover bg-center overflow-hidden text-white flex flex-col"
       style={{ backgroundImage: "url('/background.png')" }}
     >
       <BrowserRouter>
         <Navbar />
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/dashboard" element={<FontsView />} />
-            <Route path="/loading" element={<Loader />} />
-          </Routes>
-        </Suspense>
+        <div className="flex-1 min-h-0">
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/dashboard" element={<FontsView />} />
+              <Route path="/loading" element={<Loader />} />
+            </Routes>
+          </Suspense>
+        </div>
       </BrowserRouter>
     </div>
   );
