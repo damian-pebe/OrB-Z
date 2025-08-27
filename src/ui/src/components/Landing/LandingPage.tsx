@@ -23,7 +23,7 @@ function Landing() {
             leftSidebarCollapsed ? "w-12" : "w-48"
           }`}
         >
-          <div className="relative w-full h-full">
+          <div className="w-full h-full">
             {/* Collapsed Icon */}
             <div
               className={`absolute inset-0 flex flex-col items-center justify-center h-full transition-all duration-1000 ease-in-out ${
@@ -37,7 +37,7 @@ function Landing() {
 
             {/* Expanded Content */}
             <div
-              className={`transition-all duration-1000 ease-in-out origin-left ${
+              className={`h-full transition-all duration-1000 ease-in-out origin-left ${
                 leftSidebarCollapsed
                   ? "opacity-0 scale-0 pointer-events-none"
                   : "opacity-100 scale-100"
@@ -77,7 +77,7 @@ function Landing() {
             rightSidebarCollapsed ? "w-12" : "w-48"
           }`}
         >
-          <div className="relative w-full h-full">
+          <div className="w-full h-full">
             {/* Collapsed Icon */}
             <div
               className={`absolute inset-0 flex flex-col items-center justify-center h-full transition-all duration-1000 ease-in-out ${
@@ -91,7 +91,7 @@ function Landing() {
 
             {/* Expanded Content */}
             <div
-              className={`transition-all duration-1000 ease-in-out origin-right ${
+              className={`h-full transition-all duration-1000 ease-in-out origin-right ${
                 rightSidebarCollapsed
                   ? "opacity-0 scale-0 pointer-events-none"
                   : "opacity-100 scale-100"

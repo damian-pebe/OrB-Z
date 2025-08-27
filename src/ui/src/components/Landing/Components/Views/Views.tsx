@@ -115,103 +115,100 @@ export default function ViewsList() {
   };
 
   return (
-    <div className="w-full h-full relative">
-      {/* Main content area */}
-      <div className="w-full h-full flex justify-between gap-2">
-        <div className="h-full overflow-y-auto">
-          {screens.length === 0 ? (
-            <div className="text-white text-sm font-poiret transition-all duration-1000 ease-in-out">
-              - {t("view.add_views_to_preview")}
-            </div>
-          ) : (
-            screens.map((screen, index) => {
-              const lockPressed = screen.pressedLock ? "-translate-y-0.5" : "";
-              const delPressed = screen.pressedDelete ? "-translate-y-0.5" : "";
+    <div className="w-full h-full flex flex-col">
+      {/* Main content area - takes all available space minus buttons */}
+      <div className="h-full w-full flex-1">
+        {screens.length === 0 ? (
+          <div className="text-white text-sm font-poiret transition-all duration-1000 ease-in-out">
+            - {t("view.add_views_to_preview")}
+          </div>
+        ) : (
+          screens.map((screen, index) => {
+            const lockPressed = screen.pressedLock ? "-translate-y-0.5" : "";
+            const delPressed = screen.pressedDelete ? "-translate-y-0.5" : "";
 
-              return (
-                <div
-                  key={screen.id}
-                  className="flex items-center gap-2 text-xs text-white transition-all duration-300 ease-out transform hover:scale-105"
-                >
-                  <Checkbox
-                    checked={screen.visible || false}
-                    onCheckedChange={(checked) => {
-                      const isVisible = Boolean(checked);
+            return (
+              <div
+                key={screen.id}
+                className="flex items-center gap-2 text-xs text-white w-full"
+              >
+                <Checkbox
+                  checked={screen.visible || false}
+                  onCheckedChange={(checked) => {
+                    const isVisible = Boolean(checked);
 
-                      // Update the store
-                      toggleVisible(screen.id, isVisible);
+                    // Update the store
+                    toggleVisible(screen.id, isVisible);
 
-                      // Update local state immediately for immediate UI feedback
-                      setScreens((prev) =>
-                        prev.map((s) =>
-                          s.id === screen.id ? { ...s, visible: isVisible } : s
-                        )
-                      );
-                    }}
-                  />
+                    // Update local state immediately for immediate UI feedback
+                    setScreens((prev) =>
+                      prev.map((s) =>
+                        s.id === screen.id ? { ...s, visible: isVisible } : s
+                      )
+                    );
+                  }}
+                />
 
-                  <div className="flex mt-1 w-15 font-nunito truncate overflow-hidden whitespace-nowrap">
-                    {screen.name}
-                  </div>
-
-                  <button
-                    onClick={() => removeScreen(index)}
-                    className={`text-white transition-transform duration-150 hover:cursor-pointer ${delPressed}`}
-                    aria-label="Delete"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-
-                  <button
-                    onClick={() => toggleLock(index)}
-                    className={`text-white transition-transform duration-150 hover:cursor-pointer mr-5 ${lockPressed}`}
-                    aria-label={screen.locked ? "Unlock" : "Lock"}
-                  >
-                    {screen.locked ? (
-                      <LockOpen size={16} />
-                    ) : (
-                      <Lock size={16} />
-                    )}
-                  </button>
+                <div className="flex mt-1 w-full font-nunito truncate overflow-hidden whitespace-nowrap">
+                  {screen.name}
                 </div>
-              );
-            })
-          )}
+
+                <button
+                  onClick={() => removeScreen(index)}
+                  className={`text-white transition-transform duration-300 hover:cursor-pointer hover:-translate-y-0.5 ${delPressed}`}
+                  aria-label="Delete"
+                >
+                  <Trash2 size={16} />
+                </button>
+
+                <button
+                  onClick={() => toggleLock(index)}
+                  className={`text-white transition-transform duration-300 hover:cursor-pointer hover:-translate-y-0.5 ${lockPressed}`}
+                  aria-label={screen.locked ? "Unlock" : "Lock"}
+                >
+                  {screen.locked ? <LockOpen size={16} /> : <Lock size={16} />}
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Bottom buttons area - fixed at bottom with minimal height */}
+      <div className="flex justify-between items-center w-full mt-2 pt-2 border-t border-white/10">
+        {/* Left side buttons */}
+        <div className="flex gap-2">
+          <button
+            className="text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
+            onClick={hideAllViews}
+          >
+            <X size={12} />
+            Hide All
+          </button>
+
+          <button
+            className="text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
+            onClick={clearAllViews}
+          >
+            <X size={12} />
+            Clear
+          </button>
+        </div>
+
+        {/* Right side button */}
+        <div className="flex">
+          <AddViews
+            onAdd={(source) => {
+              useScreenStore.getState().addScreenSource({
+                id: source.id,
+                name: source.name,
+                visible: true,
+              });
+              handleAddView({ id: source.id, name: source.name });
+            }}
+          />
         </div>
       </div>
-
-      {/* Absolutely positioned buttons - relative to main container */}
-      {/* AddViews - Top Right */}
-      <div className="absolute top-2 right-2 z-10">
-        <AddViews
-          onAdd={(source) => {
-            useScreenStore.getState().addScreenSource({
-              id: source.id,
-              name: source.name,
-              visible: true,
-            });
-            handleAddView({ id: source.id, name: source.name });
-          }}
-        />
-      </div>
-
-      {/* Hide All - Bottom Right */}
-      <button
-        className="absolute bottom-2 right-12 z-10 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
-        onClick={hideAllViews}
-      >
-        <X />
-        Hide All
-      </button>
-
-      {/* Clear - Bottom Right (next to Hide All) */}
-      <button
-        className="absolute bottom-2 right-2 z-10 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
-        onClick={clearAllViews}
-      >
-        <X />
-        Clear
-      </button>
     </div>
   );
 }

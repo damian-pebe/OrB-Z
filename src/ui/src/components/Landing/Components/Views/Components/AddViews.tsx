@@ -62,7 +62,7 @@ export default function AddViews({ onAdd }: AddViewsProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <button className="absolute top-2 right-2 text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5">
+        <button className="text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5">
           <PlusCircleIcon width={20} />
         </button>
       </DialogTrigger>
