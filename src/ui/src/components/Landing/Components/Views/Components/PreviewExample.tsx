@@ -126,8 +126,8 @@ export default function ScreenCapture() {
   }, []);
 
   return (
-    <div className="w-full h-full rounded-xl overflow-hidden">
-      <video ref={videoRef} className="w-full h-full object-cover" autoPlay />
+    <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center">
+      <video ref={videoRef} className="h-full object-contain" autoPlay />
     </div>
   );
 }

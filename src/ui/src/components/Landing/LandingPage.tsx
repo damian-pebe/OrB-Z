@@ -58,7 +58,7 @@ function Landing() {
       </div>
       <div className="flex-1 min-w-0 h-full flex items-center justify-center m-1 font-righteous transition-all duration-1000 ease-in-out">
         <GlassContainer
-          className="h-full w-full flex flex-col items-center justify-center"
+          className="h-fit w-fit flex flex-col items-center justify-center"
           padding="p-0"
         >
           <ScreenCapture />

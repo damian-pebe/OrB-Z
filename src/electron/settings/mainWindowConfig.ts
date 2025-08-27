@@ -2,8 +2,8 @@ import { getAssetPath, getPreloadPath } from "./pathResolver.js";
 import path from "path";
 
 const baseOptions: Electron.BrowserWindowConstructorOptions = {
-  width: 1000,
-  height: 700,
+  width: 1300,
+  height: 750,
   frame: false,
   titleBarStyle: "hidden",
   icon: path.join(
