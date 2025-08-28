@@ -4,7 +4,6 @@ import { Monitor, PanelLeft, PanelRight, Settings } from "lucide-react";
 import GlassContainer from "../ui/glassContainer";
 import TitleWrapper from "../ui/TitleWrapper";
 import Options from "./Components/Options";
-// import PreviewScreens from "./Components/Views/Preview";
 import ViewsList from "./Components/Views/Views";
 import ScreenCapture from "./Components/Views/Components/PreviewExample";
 
