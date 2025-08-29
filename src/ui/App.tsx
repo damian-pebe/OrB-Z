@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react";
 
 import Loader from "./src/components/Help/Loader";
 const Landing = lazy(() => import("./src/components/Landing/LandingPage"));
-const FontsView = lazy(() => import("./src/components/Help/fontsView"));
+// const FontsView = lazy(() => import("./src/components/Help/fontsView"));
 const Navbar = lazy(() => import("./src/components/Navbar/Navbar"));
 
 function App() {
@@ -18,8 +18,8 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route path="/dashboard" element={<FontsView />} />
-              <Route path="/loading" element={<Loader />} />
+              {/* <Route path="/dashboard" element={<FontsView />} /> */}
+              {/* <Route path="/loading" element={<Loader />} /> */}
             </Routes>
           </Suspense>
         </div>
