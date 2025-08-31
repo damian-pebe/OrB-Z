@@ -3,13 +3,7 @@ import path from "path";
 import { getAssetPath } from "./pathResolver.js";
 
 export function createTray(mainWindow: BrowserWindow) {
-  const tray = new Tray(
-    path.join(
-      getAssetPath(),
-      // process.platform === "darwin" ? "orbz.png" :
-      "orbzTemplate.png"
-    )
-  );
+  const tray = new Tray(path.join(getAssetPath(), "orbzlogo.jpg"));
 
   tray.setContextMenu(
     Menu.buildFromTemplate([

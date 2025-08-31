@@ -6,11 +6,7 @@ const baseOptions: Electron.BrowserWindowConstructorOptions = {
   height: 750,
   frame: false,
   titleBarStyle: "hidden",
-  icon: path.join(
-    getAssetPath(),
-    // process.platform === "darwin" ? "orbz.png" :
-    "orbz.png"
-  ),
+  icon: path.join(getAssetPath(), "orbzlogo.jpg"),
 
   webPreferences: {
     preload: getPreloadPath(),
