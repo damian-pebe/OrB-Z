@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useScreenStore } from "../../../../../stores";
+import { useScreenStore } from "../../../../stores/useScreenStore";
 
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
