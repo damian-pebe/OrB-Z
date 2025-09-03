@@ -1,0 +1,40 @@
+export default {
+  welcome: "Bienvenido a OrB Z",
+  logout: "Cerrar sesión",
+  title: {
+    options: "Configuración",
+  },
+  llm: {
+    enabled: "Habilitar Modelo de IA",
+    disabled: "Deshabilitar Modelo de IA",
+    title: "Configuración LLM",
+    description: "Configure aquí sus ajustes de LLM.",
+    model: "Modelo",
+    temperature: "Temperatura",
+    maxTokens: "Tokens Máximos",
+    topP: "Top P",
+    frequencyPenalty: "Penalización de Frecuencia",
+    presencePenalty: "Penalización de Presencia",
+  },
+  options: {
+    user: "Perfil",
+    review: "Videos",
+    alerts: "Alertas",
+    sound: "Sonido",
+    streams: "Transmisiones",
+    dashboard: "Panel",
+    settings: "Configuración",
+  },
+  view: {
+    add: "Agregar Vista",
+    add_views_to_preview: "Agregar Ventanas para Ver la Vista Previa",
+    template: "Crear Plantilla",
+    "edit-templates": "Editar Plantillas",
+    add_preview: "Agregar Vista a la Vista Previa",
+    add_preview_description:
+      "Seleccione una Pantalla o Ventanas para agregar a la vista previa",
+    selected_view: "Vista Seleccionada: ",
+    screens: "Pantallas",
+    window: "Ventana",
+  },
+} as const;
