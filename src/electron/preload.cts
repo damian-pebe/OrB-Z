@@ -32,12 +32,6 @@ export type DesktopSource = {
   thumbnail: string;
 };
 
-type DesktopCapturerSourceMinimal = {
-  id: string;
-  name: string;
-  thumbnail?: string;
-};
-
 export type getScreen = ScreenItem | WindowItem;
 
 type EventPayloadMapping = {
