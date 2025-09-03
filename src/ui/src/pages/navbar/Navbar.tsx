@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ItemOption } from "../ui/item";
+import { ItemOption } from "../../components/item";
 
 export default function Navbar() {
   const navigate = useNavigate();

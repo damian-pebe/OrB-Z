@@ -1,7 +1,7 @@
-import { IconItemOption } from "../../ui/item";
+import { IconItemOption } from "../../../components/item";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ToggleTranslate from "../../Help/toggleTranslate";
+import ToggleTranslate from "../../help/toggleTranslate";
 import {
   AlertTriangleIcon,
   LayoutDashboard,

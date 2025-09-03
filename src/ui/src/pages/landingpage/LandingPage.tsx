@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Monitor, PanelLeft, PanelRight, Settings } from "lucide-react";
-import GlassContainer from "../ui/glassContainer";
-import TitleWrapper from "../ui/TitleWrapper";
-import Options from "./Components/Options";
-import ViewsList from "./Components/Views/Views";
-import ScreenCapture from "./Components/Views/Components/PreviewExample";
+import GlassContainer from "../../components/glassContainer";
+import TitleWrapper from "../../components/TitleWrapper";
+import Options from "./components/Options";
+import ScreenCapture from "./views/components/Preview";
+import ViewsList from "./views/Views";
 
 function Landing() {
   const { t } = useTranslation();

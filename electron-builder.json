@@ -2,7 +2,7 @@
   "appId": "com.orb-z.product",
   "files": ["dist-electron", "dist-react"],
   "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
-  "icon": "./desktopIcon.png",
+  "icon": "./orbzlogo.jpg",
   "mac": {
     "target": "dmg"
   },

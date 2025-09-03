@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
-import Loader from "./src/components/Help/Loader";
-const Landing = lazy(() => import("./src/components/Landing/LandingPage"));
+import Loader from "./src/pages/help/Loader";
+const Landing = lazy(() => import("./src/pages/landingpage/LandingPage"));
 // const FontsView = lazy(() => import("./src/components/Help/fontsView"));
-const Navbar = lazy(() => import("./src/components/Navbar/Navbar"));
+const Navbar = lazy(() => import("./src/pages/navbar/Navbar"));
 
 function App() {
   return (

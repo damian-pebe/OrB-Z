@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import type {
   screensType,
   UnsubscribeFunction,
-} from "../../../../../../../../types/types";
+} from "../../../../../../../types/types";
 
 export function useViews() {
   const unsubRef = useRef<UnsubscribeFunction>(() => {});
