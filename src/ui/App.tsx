@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
-
 import Loader from "./src/pages/help/Loader";
-const Landing = lazy(() => import("./src/pages/landingpage/LandingPage"));
-// const FontsView = lazy(() => import("./src/components/Help/fontsView"));
+const Landing = lazy(() => import("./src/pages/landing/LandingPage"));
 const Navbar = lazy(() => import("./src/pages/navbar/Navbar"));
 
 function App() {
@@ -18,8 +16,6 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<Landing />} />
-              {/* <Route path="/dashboard" element={<FontsView />} /> */}
-              {/* <Route path="/loading" element={<Loader />} /> */}
             </Routes>
           </Suspense>
         </div>
