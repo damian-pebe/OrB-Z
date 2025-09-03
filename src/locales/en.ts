@@ -34,6 +34,6 @@ export default {
     add_preview_description: "Select a Screen or Windows to add to the preview",
     selected_view: "Selected View: ",
     screens: "Screens",
-    window: "Window",
+    windows: "Window",
   },
 } as const;

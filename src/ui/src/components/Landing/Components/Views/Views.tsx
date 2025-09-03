@@ -8,12 +8,12 @@ import {
   addItem,
 } from "./lib/util";
 import type { ScreenState } from "./types/types";
-import { useTranslation } from "react-i18next";
 import { useScreenStore } from "../../../../stores/index";
 import AddViews from "./Components/AddViews";
+import { useTranslation } from "react-i18next";
 
 export default function ViewsList() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [screens, setScreens] = useState<ScreenState[]>([]);
 
   const sources = useScreenStore((state) => state.screenSources);
@@ -116,7 +116,6 @@ export default function ViewsList() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      {/* Main content area - takes all available space minus buttons */}
       <div className="h-full w-full flex-1">
         {screens.length === 0 ? (
           <div className="text-white text-sm font-poiret transition-all duration-1000 ease-in-out">
@@ -137,10 +136,8 @@ export default function ViewsList() {
                   onCheckedChange={(checked) => {
                     const isVisible = Boolean(checked);
 
-                    // Update the store
                     toggleVisible(screen.id, isVisible);
 
-                    // Update local state immediately for immediate UI feedback
                     setScreens((prev) =>
                       prev.map((s) =>
                         s.id === screen.id ? { ...s, visible: isVisible } : s
@@ -174,9 +171,7 @@ export default function ViewsList() {
         )}
       </div>
 
-      {/* Bottom buttons area - fixed at bottom with minimal height */}
       <div className="flex justify-between items-center w-full mt-2 pt-2 border-t border-white/10">
-        {/* Left side buttons */}
         <div className="flex gap-2">
           <button
             className="text-white transition-transform duration-700 hover:cursor-pointer hover:-translate-y-0.5 text-[8px] font-nunito flex flex-col items-center"
@@ -195,7 +190,6 @@ export default function ViewsList() {
           </button>
         </div>
 
-        {/* Right side button */}
         <div className="flex">
           <AddViews
             onAdd={(source) => {

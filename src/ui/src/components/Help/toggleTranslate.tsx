@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { CustomItemOption } from "../ui/item";
 
 const ToggleTranslate = () => {
-  const { i18n } = useTranslation("common");
+  const { i18n } = useTranslation();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "es" : "en";

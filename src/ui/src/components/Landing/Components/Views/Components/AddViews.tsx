@@ -24,7 +24,7 @@ interface AddViewsProps {
 }
 
 export default function AddViews({ onAdd }: AddViewsProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null);
   const [sources, setSources] = useState<DesktopSource[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -95,10 +95,10 @@ export default function AddViews({ onAdd }: AddViewsProps) {
                         onClick={() =>
                           setSelectedSourceId(isSelected ? null : source.id)
                         }
-                        className={`rounded-md p-1 transition-all duration-300 cursor-pointer border-2 ${
+                        className={`rounded-md p-1 transition-all duration-700 cursor-pointer border-2 ${
                           isSelected
-                            ? "border-white scale-105 shadow-lg"
-                            : "border-transparent hover:border-black/30 hover:scale-105"
+                            ? "border-white shadow-lg"
+                            : "border-transparent hover:border-black/30 hover:-translate-y-0.5"
                         }`}
                       >
                         <img
@@ -107,7 +107,9 @@ export default function AddViews({ onAdd }: AddViewsProps) {
                           className="w-50 h-20 object-cover rounded-md"
                         />
                         <p className="text-center text-[10px] mt-1 max-w-[80px] mx-auto break-words leading-tight">
-                          {source.name}
+                          {source.name.length > 30
+                            ? source.name.slice(0, 27) + "..."
+                            : source.name}
                         </p>
                       </div>
                     );

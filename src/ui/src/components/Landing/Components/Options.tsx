@@ -14,7 +14,7 @@ import {
 
 export default function Options() {
   const navigate = useNavigate();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   const options = [
     { label: t("options.user"), icon: <UserCircle2 />, route: "/user" },

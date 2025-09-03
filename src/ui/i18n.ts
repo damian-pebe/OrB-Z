@@ -6,10 +6,10 @@ import es from "../locales/es";
 
 const resources = {
   en: {
-    common: en,
+    translation: en,
   },
   es: {
-    common: es,
+    translation: es,
   },
 };
 
@@ -19,8 +19,6 @@ i18n
   .init({
     fallbackLng: "en",
     debug: false,
-    ns: ["common"],
-    defaultNS: "common",
     resources,
     interpolation: {
       escapeValue: false,

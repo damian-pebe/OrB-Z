@@ -8,7 +8,7 @@ import ViewsList from "./Components/Views/Views";
 import ScreenCapture from "./Components/Views/Components/PreviewExample";
 
 function Landing() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
   const [rightSidebarCollapsed, setRightSidebarCollapsed] = useState(false);
 
