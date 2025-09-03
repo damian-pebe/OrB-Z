@@ -11,6 +11,7 @@ import {
 } from "../../../../../../components/ui/dialog";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import ButtonBorders from "./ButtonBorders";
 
 type DesktopSource = {
   id: string;
@@ -121,21 +122,16 @@ export default function AddViews({ onAdd }: AddViewsProps) {
 
         <DialogFooter>
           <DialogClose asChild>
-            <button
-              onClick={handleClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded-md"
-            >
-              Cancel
-            </button>
+            <DialogClose asChild>
+              <ButtonBorders onClick={handleClose} label="Cancel" />
+            </DialogClose>
           </DialogClose>
           <DialogClose asChild>
-            <button
+            <ButtonBorders
               onClick={handleSave}
+              label="Save changes"
               disabled={!selectedSourceId}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Save changes
-            </button>
+            />
           </DialogClose>
         </DialogFooter>
       </DialogContent>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useScreenStore } from "../../../../stores/useScreenStore";
+import GlassContainer from "../../../../components/glassContainer";
+import { Video } from "lucide-react";
 
 export default function ScreenCapture() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -31,7 +33,6 @@ export default function ScreenCapture() {
       const videoTracks = mediaStream.getVideoTracks();
       if (videoTracks.length > 0) {
         videoTracks[0].onended = () => {
-          console.warn("Stream ended unexpectedly. Stopping.");
           stopCapture();
         };
       }
@@ -49,16 +50,8 @@ export default function ScreenCapture() {
   };
 
   const stopCapture = () => {
-    console.log(
-      "stopCapture called - current stream:",
-      !!stream,
-      "current recording:",
-      recordingSourceId
-    );
-
     if (stream) {
       stream.getTracks().forEach((track: MediaStreamTrack) => {
-        console.log("Stopping track:", track.kind, track.readyState);
         track.stop();
       });
     }
@@ -72,48 +65,29 @@ export default function ScreenCapture() {
 
     setStream(null);
     setRecordingSourceId(null);
-    console.log("stopCapture completed");
   };
 
   useEffect(() => {
-    console.log(
-      "Effect triggered - visibleSource:",
-      visibleSource?.id,
-      "recordingSourceId:",
-      recordingSourceId
-    );
-
     if (visibleSource?.id && visibleSource.id !== recordingSourceId) {
-      console.log(`Starting capture for visible source: ${visibleSource.id}`);
       startCapture(visibleSource.id);
     }
 
     if (!visibleSource && recordingSourceId) {
-      console.log("No visible source, stopping capture");
       stopCapture();
     }
   }, [visibleSource?.id, recordingSourceId]);
 
   useEffect(() => {
-    console.log(
-      "Sources changed, checking if recording source still exists..."
-    );
     const stillExists = sources.some((s) => s.id === recordingSourceId);
     if (recordingSourceId && !stillExists) {
-      console.warn("Recording source was removed. Stopping capture...");
       stopCapture();
     }
   }, [sources, recordingSourceId]);
 
   useEffect(() => {
-    console.log("Checking visibility for current recording source...");
     if (recordingSourceId) {
       const currentSource = sources.find((s) => s.id === recordingSourceId);
-      console.log(`Current source:`, currentSource);
       if (currentSource && currentSource.visible === false) {
-        console.log(
-          `Source ${recordingSourceId} visibility set to false, stopping capture`
-        );
         stopCapture();
       }
     }
@@ -127,7 +101,19 @@ export default function ScreenCapture() {
 
   return (
     <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center">
-      <video ref={videoRef} className="h-full object-contain" autoPlay />
+      {visibleSource ? (
+        <video ref={videoRef} className="h-full object-contain" autoPlay />
+      ) : (
+        <GlassContainer className="w-full h-full flex flex-col items-center justify-center text-white/50 space-y-4">
+          <div className="w-32 h-32 border-2 border-dashed border-white/30 rounded-lg flex items-center justify-center">
+            <Video size={64} />
+          </div>
+          <p className="text-sm text-center font-light">No screen selected</p>
+          <p className="text-xs text-center text-white/30 max-w-xs">
+            Select a screen or window from the left panel to start capturing
+          </p>
+        </GlassContainer>
+      )}
     </div>
   );
 }
