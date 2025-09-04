@@ -1,5 +1,5 @@
 import * as React from "react";
-import Separator from "./separator";
+import Separator from "./Separator";
 
 interface GlassContainerProps {
   children: React.ReactNode;

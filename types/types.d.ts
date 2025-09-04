@@ -60,6 +60,7 @@ declare global {
       invoke: <T = unknown>(channel: string, ...args: unknown[]) => Promise<T>;
 
       minimize: () => void;
+      maximize: () => void;
       close: () => void;
 
       previewDesktopSource: (sourceId: string) => void;

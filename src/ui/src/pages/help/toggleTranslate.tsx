@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { CustomItemOption } from "../../components/item";
+import { CustomItemOption } from "../../components/Item";
 
 const ToggleTranslate = () => {
   const { i18n } = useTranslation();

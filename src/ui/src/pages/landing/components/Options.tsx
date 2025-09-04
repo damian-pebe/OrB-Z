@@ -1,4 +1,4 @@
-import { IconItemOption } from "../../../components/item";
+import { IconItemOption } from "../../../components/Item";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ToggleTranslate from "../../help/toggleTranslate";

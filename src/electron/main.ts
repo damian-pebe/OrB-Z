@@ -71,6 +71,16 @@ app.on("ready", () => {
     }
   });
 
+  ipcMain.handle("window:maximize", () => {
+    if (!mainWindow.isDestroyed()) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.restore();
+      } else {
+        mainWindow.maximize();
+      }
+    }
+  });
+
   ipcMain.handle("window:close", () => {
     if (!mainWindow.isDestroyed()) {
       (mainWindow as any).__allowClose = true;

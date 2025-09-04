@@ -44,6 +44,7 @@ const { contextBridge, ipcRenderer } = electron;
 
 contextBridge.exposeInMainWorld("electron", {
   minimize: () => ipcRenderer.invoke("window:minimize"),
+  maximize: () => ipcRenderer.invoke("window:maximize"),
   close: () => ipcRenderer.invoke("window:close"),
   subscribeViewer: (callback) => {
     return ipcOn("screens", (stats) => {

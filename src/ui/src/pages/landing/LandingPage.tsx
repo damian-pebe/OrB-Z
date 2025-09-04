@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Monitor, PanelLeft, PanelRight, Settings } from "lucide-react";
-import GlassContainer from "../../components/glassContainer";
+import GlassContainer from "../../components/GlassContainer";
 import TitleWrapper from "../../components/TitleWrapper";
 import Options from "./components/Options";
 import ScreenCapture from "./views/components/Preview";

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
-import GlassContainer from "../../ui/src/components/glassContainer";
+import GlassContainer from "../../ui/src/components/GlassContainer";
 
 function Dialog({
   ...props
