@@ -12,6 +12,8 @@ import options from "./settings/mainWindowConfig.js";
 import { createTray } from "./settings/tray.js";
 import { fetchDesktopSources } from "./lib/desktopSources.js";
 
+app.disableHardwareAcceleration();
+
 interface ExtendedDisplayMediaRequest
   extends Electron.DisplayMediaRequestHandlerHandlerRequest {
   video?: {
@@ -23,8 +25,20 @@ interface ExtendedDisplayMediaRequest
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow(options);
-  // mainWindow.setMenuBarVisibility(false);
-  mainWindow.setAutoHideMenuBar(false);
+
+  mainWindow.webContents.once("dom-ready", async () => {
+    try {
+      await mainWindow.webContents.executeJavaScript(
+        "getComputedStyle(document.body).backgroundColor"
+      );
+    } catch (err) {
+      console.error("failed to read renderer bg:", err);
+    }
+  });
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
 
   session.defaultSession.setDisplayMediaRequestHandler(
     (request: ExtendedDisplayMediaRequest, callback) => {

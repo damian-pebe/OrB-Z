@@ -5,18 +5,15 @@ import GlassContainer from "../../components/glassContainer";
 import TitleWrapper from "../../components/TitleWrapper";
 import Options from "./components/Options";
 import ScreenCapture from "./views/components/Preview";
-import { useScreenStore } from "../../stores/useScreenStore";
 import ViewsList from "./views/Views";
 
 function Landing() {
   const { t } = useTranslation();
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
   const [rightSidebarCollapsed, setRightSidebarCollapsed] = useState(false);
-  const sources = useScreenStore((state) => state.screenSources);
-  const hasVisibleSource = sources.some((s) => s.visible);
 
   return (
-    <div className="w-full h-full flex items-center justify-between pb-5">
+    <div className="w-full h-full flex items-center justify-between pb-1">
       <div className="flex-none h-full flex items-center justify-center m-1 font-righteous relative">
         <GlassContainer
           padding="p-2"
@@ -59,14 +56,7 @@ function Landing() {
         </button>
       </div>
       <div className="flex-1 min-w-0 h-full flex items-center justify-center m-1 font-righteous transition-all duration-1000 ease-in-out">
-        <GlassContainer
-          className={`flex flex-col items-center justify-center transition-all duration-1000 ease-in-out ${
-            hasVisibleSource ? "h-fit w-fit" : "h-full w-full"
-          }`}
-          padding="p-0"
-        >
-          <ScreenCapture />
-        </GlassContainer>
+        <ScreenCapture />
       </div>
       <div className="flex-none h-full flex items-center justify-center m-1 font-righteous relative">
         <GlassContainer

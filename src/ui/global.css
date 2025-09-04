@@ -161,6 +161,13 @@
   }
 }
 
+/* Remove background from html, body, and root, this makes the app transparent */
+html,
+body,
+#root {
+  background: transparent !important;
+}
+
 @layer utilities {
   .drag {
     -webkit-app-region: drag;
