@@ -7,7 +7,7 @@ const Navbar = lazy(() => import("./src/pages/navbar/Navbar"));
 function App() {
   return (
     <div
-      className="h-screen w-full bg-cover bg-center overflow-hidden text-white flex flex-col"
+      className="h-screen w-full bg-cover bg-center overflow-hidden text-white flex flex-col rounded-2xl"
       style={{ backgroundImage: "url('/background.png')" }}
     >
       <BrowserRouter>

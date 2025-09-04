@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useScreenStore } from "../../../../stores/useScreenStore";
-import GlassContainer from "../../../../components/glassContainer";
 import { Video } from "lucide-react";
 
 export default function ScreenCapture() {
@@ -104,7 +103,7 @@ export default function ScreenCapture() {
       {visibleSource ? (
         <video ref={videoRef} className="h-full object-contain" autoPlay />
       ) : (
-        <GlassContainer className="w-full h-full flex flex-col items-center justify-center text-white/50 space-y-4">
+        <div className="w-full h-full flex flex-col items-center justify-center text-white/50 space-y-4">
           <div className="w-32 h-32 border-2 border-dashed border-white/30 rounded-lg flex items-center justify-center">
             <Video size={64} />
           </div>
@@ -112,7 +111,7 @@ export default function ScreenCapture() {
           <p className="text-xs text-center text-white/30 max-w-xs">
             Select a screen or window from the left panel to start capturing
           </p>
-        </GlassContainer>
+        </div>
       )}
     </div>
   );
