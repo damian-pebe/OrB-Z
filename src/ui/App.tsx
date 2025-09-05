@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import Loader from "./src/pages/help/Loader";
 const Landing = lazy(() => import("./src/pages/landing/LandingPage"));
 const Navbar = lazy(() => import("./src/pages/navbar/Navbar"));
+const VideosView = lazy(() => import("./src/pages/videos/VideosView"));
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<Landing />} />
+              <Route path="/review" element={<VideosView />} />
             </Routes>
           </Suspense>
         </div>
