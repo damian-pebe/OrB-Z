@@ -1,6 +1,6 @@
-import { isAxiosError } from 'axios';
-import { useTranslation } from 'react-i18next';
-import useCustomSnackbar from './useCustomSnackbar';
+import { isAxiosError } from "axios";
+import { useTranslation } from "react-i18next";
+import useCustomSnackbar from "./useCustomSnackbar";
 
 export default function useErrorHandler() {
   const { enqueueSnackbar } = useCustomSnackbar();
@@ -12,9 +12,9 @@ export default function useErrorHandler() {
     } else if (error instanceof Error) {
       message = error.message;
     } else {
-      message = t('error.something_went_wrong');
+      message = t("error.something_went_wrong");
     }
-    enqueueSnackbar({ message, variant: 'error' });
+    enqueueSnackbar({ message, variant: "error" });
 
     /* Here we can log the error to an external service like Sentry */
   };
