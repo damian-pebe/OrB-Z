@@ -26,3 +26,13 @@ dist-ssr
 dist
 dist-react
 dist-electron
+
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.test.local
+.env.test.production
+.env.test.development
+.env.test.local
