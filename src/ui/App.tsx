@@ -3,14 +3,18 @@ import { Suspense, lazy } from "react";
 import Loader from "./src/pages/help/Loader";
 import routes from "./router";
 import getBackground from "../lib/utils/getBackground";
+import { ThemeProvider } from "./src/components/ThemeProvider";
+import { useThemeStore } from "./src/stores/useThemeStore";
 
 const Navbar = lazy(() => import("./src/pages/navbar/Navbar"));
 
-function App() {
+function AppContent() {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
     <div
       className="h-screen w-full bg-cover bg-center overflow-hidden text-white flex flex-col rounded-2xl"
-      style={{ backgroundImage: `url('${getBackground()}')` }}
+      style={{ backgroundImage: `url('${getBackground(theme)}')` }}
     >
       <BrowserRouter>
         <Navbar />
@@ -25,6 +29,14 @@ function App() {
         </div>
       </BrowserRouter>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
