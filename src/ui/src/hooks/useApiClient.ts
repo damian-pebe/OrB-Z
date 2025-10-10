@@ -95,12 +95,3 @@ const useApiClient = () => {
 };
 
 export default useApiClient;
-
-//Usage example
-// const { apiClient } = useApiClient();
-// const payload = {
-//   email: "test@test.com",
-//   password: "test",
-// };
-// const response = await apiClient.get("/api/v1/users",payload);
-// console.log(response.data);
